@@ -1,0 +1,23 @@
+{
+  "env": {
+    "amd": true,
+    "commonjs": true,
+    "node": true,
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:vue/vue3-recommended",
+    "plugin:cypress/recommended",
+    "@vue/eslint-config-prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "root": true,
+  "rules": {
+    "vue/comment-directive": "off"
+  }
+}
