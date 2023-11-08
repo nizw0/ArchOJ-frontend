@@ -19,6 +19,8 @@
   "plugins": ["react-refresh"],
   "root": true,
   "rules": {
+    "prettier/prettier": "error",
+
     "react/jsx-sort-props": [
       "error",
       {
@@ -32,8 +34,6 @@
       {
         "allowConstantExport": true
       }
-    ],
-
-    "prettier/prettier": "error"
+    ]
   }
 }
