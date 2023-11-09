@@ -1,21 +1,31 @@
 import { createBrowserRouter } from 'react-router-dom'
-import Sidebar from './components/sidebar'
+import Layout from './layout'
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <>
-        <Sidebar>
-          <div>123</div>
-        </Sidebar>
-      </>
-    ),
-    // children: [
-    //   {
-    //     path: '/',
-    //     element: <></>,
-    //   },
-    // ],
+    element: <Layout />,
+    children: [
+      {
+        path: '/',
+        element: <p>home</p>,
+      },
+      {
+        path: 'profile',
+        element: <p>profile</p>,
+      },
+      {
+        path: 'problems',
+        element: <p>problems</p>,
+      },
+      {
+        path: 'submissions',
+        element: <p>submissions</p>,
+      },
+      {
+        path: 'workspace',
+        element: <p>workspace</p>,
+      },
+    ],
   },
 ])
