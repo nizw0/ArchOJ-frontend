@@ -1,8 +1,8 @@
 import { Dialog, Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import {
   Bars3Icon,
-  BellIcon,
+  ChartBarIcon,
   ChartPieIcon,
   Cog6ToothIcon,
   ComputerDesktopIcon,
@@ -12,12 +12,13 @@ import {
   Square3Stack3DIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
+import { clsx } from 'clsx'
 import { Fragment, useState } from 'react'
 import { Outlet } from 'react-router'
 import { Link } from 'react-router-dom'
 
 function AppIcon() {
-  return <Square3Stack3DIcon className="w-auto h-8 stroke-white" />
+  return <Square3Stack3DIcon className="h-8 w-auto stroke-white" />
 }
 
 const navigation = [
@@ -25,16 +26,12 @@ const navigation = [
   { name: 'Problems', to: '/problems', icon: DocumentDuplicateIcon },
   { name: 'Submissions', to: '/submissions', icon: FolderIcon },
   { name: 'Workspace', to: '/workspace', icon: ComputerDesktopIcon },
+  { name: 'Scoreboard', to: '#', icon: ChartBarIcon },
   { name: 'Dashboard', to: '#', icon: ChartPieIcon },
 ]
-const userNavigation = [
-  { name: 'Profile', to: '/profile' },
-  { name: 'Signout', to: '#' },
-]
+const userNavigation = [{ name: 'Sign out', to: '#' }]
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+const isLogin = true
 
 export default function Sidebar({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -69,7 +66,7 @@ export default function Sidebar({ children }) {
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <Dialog.Panel className="relative flex flex-1 w-full max-w-xs mr-16">
+              <Dialog.Panel className="relative mr-16 flex w-full max-w-xs flex-1">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-in-out duration-300"
@@ -79,7 +76,7 @@ export default function Sidebar({ children }) {
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
                 >
-                  <div className="absolute top-0 flex justify-center w-16 pt-5 left-full">
+                  <div className="absolute left-full top-0 flex w-16 justify-center pt-5">
                     <button
                       className="-m-2.5 p-2.5"
                       type="button"
@@ -88,18 +85,18 @@ export default function Sidebar({ children }) {
                       <span className="sr-only">Close sidebar</span>
                       <XMarkIcon
                         aria-hidden="true"
-                        className="w-6 h-6 text-white"
+                        className="h-6 w-6 text-white"
                       />
                     </button>
                   </div>
                 </Transition.Child>
                 {/* Sidebar component, swap this element with another sidebar if you like */}
-                <div className="flex flex-col px-6 pb-4 overflow-y-auto bg-gray-900 grow gap-y-5 ring-1 ring-white/10">
-                  <div className="flex items-center h-16 shrink-0">
+                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4 ring-1 ring-white/10">
+                  <div className="flex h-14 shrink-0 items-center">
                     <AppIcon />
                   </div>
-                  <nav className="flex flex-col flex-1">
-                    <ul className="flex flex-col flex-1 gap-y-7" role="list">
+                  <nav className="flex flex-1 flex-col">
+                    <ul className="flex flex-1 flex-col gap-y-7" role="list">
                       <li>
                         <ul className="-mx-2 space-y-1" role="list">
                           {navigation.map((item) => (
@@ -107,16 +104,16 @@ export default function Sidebar({ children }) {
                               <Link
                                 reloadDocument="true"
                                 to={item.to}
-                                className={classNames(
+                                className={clsx(
                                   location.pathname === item.to
                                     ? 'bg-gray-800 text-white'
-                                    : 'text-gray-400 hover:text-white hover:bg-gray-800',
-                                  'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
+                                    : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                                  'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
                                 )}
                               >
                                 <item.icon
                                   aria-hidden="true"
-                                  className="w-6 h-6 shrink-0"
+                                  className="h-6 w-6 shrink-0"
                                 />
                                 {item.name}
                               </Link>
@@ -126,12 +123,18 @@ export default function Sidebar({ children }) {
                       </li>
                       <li className="mt-auto">
                         <Link
-                          className="flex p-2 -mx-2 text-sm font-semibold leading-6 text-gray-400 rounded-md group gap-x-3 hover:bg-gray-800 hover:text-white"
-                          to="#"
+                          reloadDocument="true"
+                          to="/settings"
+                          className={clsx(
+                            'group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
+                            location.pathname === '/settings'
+                              ? 'bg-gray-800 text-white'
+                              : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                          )}
                         >
                           <Cog6ToothIcon
                             aria-hidden="true"
-                            className="w-6 h-6 shrink-0"
+                            className="h-6 w-6 shrink-0"
                           />
                           Settings
                         </Link>
@@ -148,12 +151,12 @@ export default function Sidebar({ children }) {
       {/* Static sidebar for desktop */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
         {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="flex flex-col px-6 pb-4 overflow-y-auto bg-gray-900 grow gap-y-5">
-          <div className="flex items-center h-16 shrink-0">
+        <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
+          <div className="flex h-14 shrink-0 items-center">
             <AppIcon />
           </div>
-          <nav className="flex flex-col flex-1">
-            <ul className="flex flex-col flex-1 gap-y-7" role="list">
+          <nav className="flex flex-1 flex-col">
+            <ul className="flex flex-1 flex-col gap-y-7" role="list">
               <li>
                 <ul className="-mx-2 space-y-1" role="list">
                   {navigation.map((item) => (
@@ -161,16 +164,16 @@ export default function Sidebar({ children }) {
                       <Link
                         reloadDocument="true"
                         to={item.to}
-                        className={classNames(
+                        className={clsx(
+                          'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
                           location.pathname === item.to
                             ? 'bg-gray-800 text-white'
-                            : 'text-gray-400 hover:text-white hover:bg-gray-800',
-                          'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
+                            : 'text-gray-400 hover:bg-gray-800 hover:text-white'
                         )}
                       >
                         <item.icon
                           aria-hidden="true"
-                          className="w-6 h-6 shrink-0"
+                          className="h-6 w-6 shrink-0"
                         />
                         {item.name}
                       </Link>
@@ -180,12 +183,18 @@ export default function Sidebar({ children }) {
               </li>
               <li className="mt-auto">
                 <Link
-                  className="flex p-2 -mx-2 text-sm font-semibold leading-6 text-gray-400 rounded-md group gap-x-3 hover:bg-gray-800 hover:text-white"
-                  to="#"
+                  reloadDocument="true"
+                  to="/settings"
+                  className={clsx(
+                    'group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
+                    location.pathname === '/settings'
+                      ? 'bg-gray-800 text-white'
+                      : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                  )}
                 >
                   <Cog6ToothIcon
                     aria-hidden="true"
-                    className="w-6 h-6 shrink-0"
+                    className="h-6 w-6 shrink-0"
                   />
                   Settings
                 </Link>
@@ -196,48 +205,27 @@ export default function Sidebar({ children }) {
       </div>
 
       <div className="lg:pl-72">
-        <div className="sticky top-0 z-40 flex items-center h-16 px-4 bg-white border-b border-gray-200 shadow-sm shrink-0 gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8">
+        <div className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
           <button
             className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
             type="button"
             onClick={() => setSidebarOpen(true)}
           >
             <span className="sr-only">Open sidebar</span>
-            <Bars3Icon aria-hidden="true" className="w-6 h-6" />
+            <Bars3Icon aria-hidden="true" className="h-6 w-6" />
           </button>
 
           {/* Separator */}
           <div
             aria-hidden="true"
-            className="w-px h-6 bg-gray-900/10 lg:hidden"
+            className="h-6 w-px bg-gray-900/10 lg:hidden"
           />
 
-          <div className="flex self-stretch flex-1 gap-x-4 lg:gap-x-6">
-            <form action="#" className="relative flex flex-1" method="GET">
-              <label className="sr-only" htmlFor="search-field">
-                Search
-              </label>
-              <MagnifyingGlassIcon
-                aria-hidden="true"
-                className="absolute inset-y-0 left-0 w-5 h-full text-gray-400 pointer-events-none"
-              />
-              <input
-                className="block w-full h-full py-0 pl-8 pr-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
-                id="search-field"
-                name="search"
-                placeholder="Search..."
-                type="search"
-              />
-            </form>
+          <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
+            <div className="relative flex flex-1">
+              <Breadcrumb />
+            </div>
             <div className="flex items-center gap-x-4 lg:gap-x-6">
-              <button
-                className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
-                type="button"
-              >
-                <span className="sr-only">View notifications</span>
-                <BellIcon aria-hidden="true" className="w-6 h-6" />
-              </button>
-
               {/* Separator */}
               <div
                 aria-hidden="true"
@@ -246,54 +234,65 @@ export default function Sidebar({ children }) {
 
               {/* Profile dropdown */}
               <Menu as="div" className="relative">
-                <Menu.Button className="-m-1.5 flex items-center p-1.5">
-                  <span className="sr-only">Open user menu</span>
-                  <img
-                    alt=""
-                    className="w-8 h-8 rounded-full bg-gray-50"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  />
-                  <span className="hidden lg:flex lg:items-center">
-                    <span
-                      aria-hidden="true"
-                      className="ml-4 text-sm font-semibold leading-6 text-gray-900"
+                {isLogin ? (
+                  <>
+                    <Menu.Button className="-m-1.5 flex items-center p-1.5">
+                      <span className="sr-only">Open user menu</span>
+                      <img
+                        alt=""
+                        className="h-8 w-8 rounded-full bg-gray-50"
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      />
+                      <span className="hidden lg:flex lg:items-center">
+                        <span
+                          aria-hidden="true"
+                          className="ml-4 text-sm font-semibold leading-6 text-gray-900"
+                        >
+                          User
+                        </span>
+                        <ChevronDownIcon
+                          aria-hidden="true"
+                          className="ml-2 h-5 w-5 text-gray-400"
+                        />
+                      </span>
+                    </Menu.Button>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
                     >
-                      User
-                    </span>
-                    <ChevronDownIcon
-                      aria-hidden="true"
-                      className="w-5 h-5 ml-2 text-gray-400"
-                    />
-                  </span>
-                </Menu.Button>
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                    {userNavigation.map((item) => (
-                      <Menu.Item key={item.name}>
-                        {({ active }) => (
-                          <Link
-                            reloadDocument="true"
-                            to={item.to}
-                            className={classNames(
-                              active ? 'bg-gray-50' : '',
-                              'block px-3 py-1 text-sm leading-6 text-gray-900'
+                      <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                        {userNavigation.map((item) => (
+                          <Menu.Item key={item.name}>
+                            {({ active }) => (
+                              <Link
+                                reloadDocument="true"
+                                to={item.to}
+                                className={clsx(
+                                  'block px-3 py-1 text-sm leading-6 text-gray-900',
+                                  active ? 'bg-gray-50' : ''
+                                )}
+                              >
+                                {item.name}
+                              </Link>
                             )}
-                          >
-                            {item.name}
-                          </Link>
-                        )}
-                      </Menu.Item>
-                    ))}
-                  </Menu.Items>
-                </Transition>
+                          </Menu.Item>
+                        ))}
+                      </Menu.Items>
+                    </Transition>
+                  </>
+                ) : (
+                  <Link
+                    className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    to="/signin"
+                  >
+                    Sign In
+                  </Link>
+                )}
               </Menu>
             </div>
           </div>
@@ -307,5 +306,45 @@ export default function Sidebar({ children }) {
         </main>
       </div>
     </div>
+  )
+}
+
+function Breadcrumb() {
+  return (
+    <nav aria-label="Breadcrumb" className="flex">
+      <ol className="flex items-center space-x-4" role="list">
+        <li>
+          <div>
+            <Link className="text-gray-400 hover:text-gray-500" to="/">
+              <HomeIcon aria-hidden="true" className="h-5 w-5 flex-shrink-0" />
+              <span className="sr-only">Home</span>
+            </Link>
+          </div>
+        </li>
+        <li>
+          <div className="flex items-center">
+            {location.pathname !== '/' ? (
+              <>
+                <svg
+                  aria-hidden="true"
+                  className="h-5 w-5 flex-shrink-0 text-gray-300"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
+                </svg>
+                <Link
+                  aria-current="page"
+                  className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
+                  to={location.pathname}
+                >
+                  {location.pathname.substring(1)}
+                </Link>
+              </>
+            ) : null}
+          </div>
+        </li>
+      </ol>
+    </nav>
   )
 }
