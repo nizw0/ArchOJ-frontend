@@ -3,12 +3,10 @@ import {
   ArrowLongRightIcon,
 } from '@heroicons/react/20/solid'
 import { clsx } from 'clsx'
-import { useState } from 'react'
 
 const itemsCount = 100
 
-export default function Pagination() {
-  const [currentPage, setCurrentPage] = useState(1)
+export default function Pagination({ currentPage, setCurrentPage }) {
   const firstPage = 1
   const lastPage = itemsCount / 10
   const pages = []

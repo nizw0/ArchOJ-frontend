@@ -1,4 +1,4 @@
-const problems = Array.from({ length: 10 }, (_, i) => {
+const problems = Array.from({ length: 100 }, (_, i) => {
   const v = {
     id: i + 1,
     name: 'MYSQL n+1 problem',
@@ -8,7 +8,12 @@ const problems = Array.from({ length: 10 }, (_, i) => {
   return v
 })
 
-export default function ProblemTable() {
+export default function ProblemTable({
+  isSlideOpen,
+  setIsSlideOpen,
+  currentPage,
+  setCurrentPage,
+}) {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       {/* Header */}
@@ -22,8 +27,9 @@ export default function ProblemTable() {
           <button
             className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             type="button"
+            onClick={() => setIsSlideOpen(!isSlideOpen)}
           >
-            Upload
+            New
           </button>
         </div>
       </div>
@@ -43,7 +49,7 @@ export default function ProblemTable() {
                 className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                 scope="col"
               >
-                Title
+                Name
               </th>
               <th
                 className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
@@ -54,19 +60,24 @@ export default function ProblemTable() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
-            {problems.map((problem) => (
-              <tr className="hover:bg-gray-100" key={problem.id}>
-                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-0">
-                  {problem.id}
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-500">
-                  {problem.name}
-                </td>
-                <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                  {problem.description}
-                </td>
-              </tr>
-            ))}
+            {problems
+              .slice(
+                (currentPage - 1) * 10,
+                Math.min(problems.length, currentPage * 10)
+              )
+              .map((problem) => (
+                <tr className="hover:bg-gray-100" key={problem.id}>
+                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-0">
+                    {problem.id}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-500">
+                    {problem.name}
+                  </td>
+                  <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                    {problem.description}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

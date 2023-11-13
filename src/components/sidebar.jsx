@@ -33,7 +33,7 @@ const userNavigation = [{ name: 'Sign out', to: '#' }]
 
 const isLogin = true
 
-export default function Sidebar({ children }) {
+export default function Sidebar({ isModalOpen, setIsModalOpen }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
@@ -226,6 +226,13 @@ export default function Sidebar({ children }) {
               <Breadcrumb />
             </div>
             <div className="flex items-center gap-x-4 lg:gap-x-6">
+              <button
+                className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                type="button"
+                onClick={() => setIsModalOpen(!isModalOpen)}
+              >
+                Submit
+              </button>
               {/* Separator */}
               <div
                 aria-hidden="true"
@@ -315,7 +322,11 @@ function Breadcrumb() {
       <ol className="flex items-center space-x-4" role="list">
         <li>
           <div>
-            <Link className="text-gray-400 hover:text-gray-500" to="/">
+            <Link
+              className="text-gray-400 hover:text-gray-500"
+              reloadDocument="true"
+              to="/"
+            >
               <HomeIcon aria-hidden="true" className="h-5 w-5 flex-shrink-0" />
               <span className="sr-only">Home</span>
             </Link>
