@@ -4,6 +4,7 @@ import SubmissionModal from './components/submission-modal'
 
 export default function Layout() {
   const [isModalOpen, setIsModalOpen] = useState(false)
+
   return (
     <>
       <SubmissionModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />

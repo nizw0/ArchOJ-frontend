@@ -13,8 +13,8 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { clsx } from 'clsx'
-import { Fragment, useState } from 'react'
-import { Outlet } from 'react-router'
+import { Fragment, useEffect, useState } from 'react'
+import { Outlet, useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 
 function AppIcon() {
@@ -35,6 +35,7 @@ const isLogin = true
 
 export default function Sidebar({ isModalOpen, setIsModalOpen }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const location = useLocation()
 
   return (
     <div>
@@ -102,10 +103,12 @@ export default function Sidebar({ isModalOpen, setIsModalOpen }) {
                           {navigation.map((item) => (
                             <li key={item.name}>
                               <Link
-                                reloadDocument="true"
                                 to={item.to}
                                 className={clsx(
-                                  location.pathname === item.to
+                                  (item.name === 'Home' &&
+                                    location.pathname === '/') ||
+                                    (item.name !== 'Home' &&
+                                      location.pathname.includes(item.to))
                                     ? 'bg-gray-800 text-white'
                                     : 'text-gray-400 hover:bg-gray-800 hover:text-white',
                                   'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
@@ -123,7 +126,6 @@ export default function Sidebar({ isModalOpen, setIsModalOpen }) {
                       </li>
                       <li className="mt-auto">
                         <Link
-                          reloadDocument="true"
                           to="/settings"
                           className={clsx(
                             'group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
@@ -162,11 +164,12 @@ export default function Sidebar({ isModalOpen, setIsModalOpen }) {
                   {navigation.map((item) => (
                     <li key={item.name}>
                       <Link
-                        reloadDocument="true"
                         to={item.to}
                         className={clsx(
                           'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
-                          location.pathname === item.to
+                          (item.name === 'Home' && location.pathname === '/') ||
+                            (item.name !== 'Home' &&
+                              location.pathname.includes(item.to))
                             ? 'bg-gray-800 text-white'
                             : 'text-gray-400 hover:bg-gray-800 hover:text-white'
                         )}
@@ -183,7 +186,6 @@ export default function Sidebar({ isModalOpen, setIsModalOpen }) {
               </li>
               <li className="mt-auto">
                 <Link
-                  reloadDocument="true"
                   to="/settings"
                   className={clsx(
                     'group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
@@ -223,7 +225,9 @@ export default function Sidebar({ isModalOpen, setIsModalOpen }) {
 
           <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
             <div className="relative flex flex-1">
-              <Breadcrumb />
+              <div className="hidden sm:flex">
+                <Breadcrumb location={location} />
+              </div>
             </div>
             <div className="flex items-center gap-x-4 lg:gap-x-6">
               <button
@@ -236,7 +240,7 @@ export default function Sidebar({ isModalOpen, setIsModalOpen }) {
               {/* Separator */}
               <div
                 aria-hidden="true"
-                className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10"
+                className="block h-6 w-px bg-gray-900/10"
               />
 
               {/* Profile dropdown */}
@@ -277,7 +281,6 @@ export default function Sidebar({ isModalOpen, setIsModalOpen }) {
                           <Menu.Item key={item.name}>
                             {({ active }) => (
                               <Link
-                                reloadDocument="true"
                                 to={item.to}
                                 className={clsx(
                                   'block px-3 py-1 text-sm leading-6 text-gray-900',
@@ -316,17 +319,19 @@ export default function Sidebar({ isModalOpen, setIsModalOpen }) {
   )
 }
 
-function Breadcrumb() {
+function Breadcrumb({ location }) {
+  const [paths, setPaths] = useState([])
+
+  useEffect(() => {
+    setPaths(location.pathname.split('/'))
+  }, [location])
+
   return (
     <nav aria-label="Breadcrumb" className="flex">
       <ol className="flex items-center space-x-4" role="list">
         <li>
           <div>
-            <Link
-              className="text-gray-400 hover:text-gray-500"
-              reloadDocument="true"
-              to="/"
-            >
+            <Link className="text-gray-400 hover:text-gray-500" to="/">
               <HomeIcon aria-hidden="true" className="h-5 w-5 flex-shrink-0" />
               <span className="sr-only">Home</span>
             </Link>
@@ -334,25 +339,23 @@ function Breadcrumb() {
         </li>
         <li>
           <div className="flex items-center">
-            {location.pathname !== '/' ? (
-              <>
-                <svg
-                  aria-hidden="true"
-                  className="h-5 w-5 flex-shrink-0 text-gray-300"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
-                </svg>
-                <Link
-                  aria-current="page"
-                  className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
-                  to={location.pathname}
-                >
-                  {location.pathname.substring(1)}
-                </Link>
-              </>
-            ) : null}
+            {paths.map((path, i) =>
+              path !== '' ? (
+                <div className="flex" key={i}>
+                  <svg
+                    aria-hidden="true"
+                    className="h-5 w-5 flex-shrink-0 text-gray-300"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
+                  </svg>
+                  <p className="mx-1 text-sm font-medium text-gray-500">
+                    {path}
+                  </p>
+                </div>
+              ) : null
+            )}
           </div>
         </li>
       </ol>

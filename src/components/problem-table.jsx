@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router'
+
 const problems = Array.from({ length: 100 }, (_, i) => {
   const v = {
     id: i + 1,
@@ -14,6 +16,8 @@ export default function ProblemTable({
   currentPage,
   setCurrentPage,
 }) {
+  const navigate = useNavigate()
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       {/* Header */}
@@ -66,7 +70,11 @@ export default function ProblemTable({
                 Math.min(problems.length, currentPage * 10)
               )
               .map((problem) => (
-                <tr className="hover:bg-gray-100" key={problem.id}>
+                <tr
+                  className="hover:bg-gray-100"
+                  key={problem.id}
+                  onClick={() => navigate(`${problem.id}`)}
+                >
                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-0">
                     {problem.id}
                   </td>
