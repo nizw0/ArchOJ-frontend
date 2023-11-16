@@ -76,7 +76,7 @@ export default function CompetitionScoreboardTable() {
                     <td className="whitespace-nowrap p-4 text-sm text-gray-500">
                       {team.score}
                     </td>
-                    {team.solves.map((solve, i) => (
+                    {team.solves.map((solve) => (
                       <td
                         className="whitespace-nowrap p-4 text-sm text-gray-500"
                         key={team.name}
