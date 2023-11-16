@@ -3,12 +3,14 @@ import Layout from './layout'
 import Action from './pages/action'
 import AdminDashboard from './pages/admin-dashboard'
 import CompetitionScoreboard from './pages/competition-scoreboard'
+import CompletePassword from './pages/complete-password'
+import ForgetPassword from './pages/forget-password'
 import Home from './pages/home'
 import PracticeScoreboard from './pages/practice-scoreboard'
 import Problem from './pages/problem'
 import Problems from './pages/problems'
 import Settings from './pages/settings'
-import SignIn from './pages/signin'
+import SignIn from './pages/sign-in'
 import Submission from './pages/submission'
 import Submissions from './pages/submissions'
 import Workspace from './pages/workspace'
@@ -23,8 +25,16 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/signin',
+        path: '/sign-in',
         element: <SignIn />,
+      },
+      {
+        path: '/complete-password',
+        element: <CompletePassword />,
+      },
+      {
+        path: '/forget-password',
+        element: <ForgetPassword />,
       },
       {
         path: '/problems',

@@ -1,6 +1,7 @@
+import { handleSignIn } from '@/apis/authentication'
 import { Square3Stack3DIcon } from '@heroicons/react/24/outline'
 
-export default function SignIn() {
+export default function ForgetPassword() {
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -9,56 +10,38 @@ export default function SignIn() {
             <Square3Stack3DIcon className="h-8 w-auto stroke-gray-900" />
           </div>
           <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign in to your account
+            Reset password
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" className="space-y-6" method="POST">
+          <form
+            action="#"
+            className="space-y-6"
+            method="POST"
+            onSubmit={async (event) => {
+              event.preventDefault()
+              await handleSignIn({
+                username: event.target.username.value,
+                password: event.target.password.value,
+              })
+            }}
+          >
             <div>
               <label
                 className="block text-sm font-medium leading-6 text-gray-900"
-                htmlFor="email"
+                htmlFor="username"
               >
-                Email address
+                Username
               </label>
               <div className="mt-2">
                 <input
                   required
-                  autoComplete="email"
+                  autoComplete="username"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  id="email"
-                  name="email"
-                  type="email"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                  htmlFor="password"
-                >
-                  Password
-                </label>
-                {/* <div className="text-sm">
-                  <a
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                    href="#"
-                  >
-                    Forgot password?
-                  </a>
-                </div> */}
-              </div>
-              <div className="mt-2">
-                <input
-                  required
-                  autoComplete="current-password"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  id="password"
-                  name="password"
-                  type="password"
+                  id="username"
+                  name="username"
+                  type="text"
                 />
               </div>
             </div>

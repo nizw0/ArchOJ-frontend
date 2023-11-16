@@ -24,8 +24,8 @@ export default function Workspace() {
       <p className="mt-4 text-4xl font-bold">{status}</p>
 
       <button
+        disabled
         className="relative mt-32 block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center"
-        disabled={true}
         type="button"
       >
         <HashtagIcon aria-hidden="true" className="mx-auto h-12 w-12" />
