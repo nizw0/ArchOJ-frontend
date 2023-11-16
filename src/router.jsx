@@ -1,6 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom'
 import Layout from './layout'
+import CompetitionScoreboard from './pages/competition-scoreboard'
 import Home from './pages/home'
+import PracticeScoreboard from './pages/practice-scoreboard'
 import Problem from './pages/problem'
 import Problems from './pages/problems'
 import Settings from './pages/settings'
@@ -41,6 +43,14 @@ export const router = createBrowserRouter([
       {
         path: '/workspace',
         element: <Workspace />,
+      },
+      {
+        path: '/practice',
+        element: <PracticeScoreboard />,
+      },
+      {
+        path: '/competition',
+        element: <CompetitionScoreboard />,
       },
       {
         path: '/settings',

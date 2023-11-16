@@ -28,6 +28,8 @@ const navigation = [
   { name: 'Workspace', to: '/workspace', icon: ComputerDesktopIcon },
   { name: 'Scoreboard', to: '#', icon: ChartBarIcon },
   { name: 'Dashboard', to: '#', icon: ChartPieIcon },
+  { name: 'Practice', to: '/practice', icon: ChartPieIcon },
+  { name: 'Competition', to: '/competition', icon: ChartPieIcon },
 ]
 const userNavigation = [{ name: 'Sign out', to: '#' }]
 

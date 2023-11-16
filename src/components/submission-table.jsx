@@ -1,4 +1,5 @@
 import { clsx } from 'clsx'
+import { useNavigate } from 'react-router'
 
 const submissions = Array.from({ length: 100 }, (_, i) => {
   const v = {
@@ -6,8 +7,8 @@ const submissions = Array.from({ length: 100 }, (_, i) => {
     problemId: '1',
     problemTitle: 'MYSQL n+1 problem',
     userId: '1',
-    language: 'c',
-    runtime: '1 ms',
+    language: 'CPP',
+    runtime: '2.13s',
     status: 'Accepted',
     time: '5 days ago',
   }
@@ -16,6 +17,8 @@ const submissions = Array.from({ length: 100 }, (_, i) => {
 })
 
 export default function SubmissionTable({ currentPage, setCurrentPage }) {
+  const navigate = useNavigate()
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
@@ -68,7 +71,11 @@ export default function SubmissionTable({ currentPage, setCurrentPage }) {
                 Math.min(submissions.length, currentPage * 10)
               )
               .map((submission) => (
-                <tr key={submission.id}>
+                <tr
+                  className="hover:bg-gray-100"
+                  key={submission.id}
+                  onClick={() => navigate(`${submission.id}`)}
+                >
                   <td className="hidden w-full max-w-0 py-4 pl-4 pr-3 text-sm text-gray-500 sm:table-cell sm:w-auto sm:max-w-none sm:pl-0">
                     {submission.time}
                   </td>

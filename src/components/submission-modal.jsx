@@ -45,6 +45,18 @@ export default function SubmissionModal({ isOpen, setIsOpen }) {
                     >
                       Submit
                     </Dialog.Title>
+                    <div>
+                      <label className="block text-sm font-medium leading-6 text-gray-900">
+                        Problem Id
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          className="block w-full rounded-md border-0 py-1.5 text-center text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          id="problemId"
+                          type="text"
+                        />
+                      </div>
+                    </div>
                     <div className="mt-2">
                       <label className="block text-sm font-medium leading-6 text-gray-900">
                         File
