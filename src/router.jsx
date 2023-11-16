@@ -1,5 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 import Layout from './layout'
+import Action from './pages/action'
+import AdminDashboard from './pages/admin-dashboard'
 import CompetitionScoreboard from './pages/competition-scoreboard'
 import Home from './pages/home'
 import PracticeScoreboard from './pages/practice-scoreboard'
@@ -45,12 +47,20 @@ export const router = createBrowserRouter([
         element: <Workspace />,
       },
       {
+        path: '/admin-dashboard',
+        element: <AdminDashboard />,
+      },
+      {
         path: '/practice',
         element: <PracticeScoreboard />,
       },
       {
         path: '/competition',
         element: <CompetitionScoreboard />,
+      },
+      {
+        path: '/action/:id',
+        element: <Action />,
       },
       {
         path: '/settings',

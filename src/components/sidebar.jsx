@@ -26,10 +26,9 @@ const navigation = [
   { name: 'Problems', to: '/problems', icon: DocumentDuplicateIcon },
   { name: 'Submissions', to: '/submissions', icon: FolderIcon },
   { name: 'Workspace', to: '/workspace', icon: ComputerDesktopIcon },
-  { name: 'Scoreboard', to: '#', icon: ChartBarIcon },
-  { name: 'Dashboard', to: '#', icon: ChartPieIcon },
-  { name: 'Practice', to: '/practice', icon: ChartPieIcon },
-  { name: 'Competition', to: '/competition', icon: ChartPieIcon },
+  { name: 'Practice', to: '/practice', icon: ChartBarIcon },
+  { name: 'Competition', to: '/competition', icon: ChartBarIcon },
+  { name: 'Dashboard', to: '/admin-dashboard', icon: ChartPieIcon },
 ]
 const userNavigation = [{ name: 'Sign out', to: '#' }]
 
