@@ -32,9 +32,9 @@ const navigation = [
 ]
 const userNavigation = [{ name: 'Sign out', to: '#' }]
 
-const isLogin = true
+const isLogin = false
 
-export default function Sidebar({ isModalOpen, setIsModalOpen }) {
+export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const location = useLocation()
 
@@ -234,7 +234,10 @@ export default function Sidebar({ isModalOpen, setIsModalOpen }) {
               <button
                 className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 type="button"
-                onClick={() => setIsModalOpen(!isModalOpen)}
+                onClick={() => {
+                  setProblemId(location.pathname.split('/').pop())
+                  setIsModalOpen(!isModalOpen)
+                }}
               >
                 Submit
               </button>
