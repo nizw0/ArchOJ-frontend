@@ -4,11 +4,11 @@ import Action from './pages/action'
 import AdminDashboard from './pages/admin-dashboard'
 import CompetitionScoreboard from './pages/competition-scoreboard'
 import CompletePassword from './pages/complete-password'
-import ForgetPassword from './pages/forget-password'
 import Home from './pages/home'
 import PracticeScoreboard from './pages/practice-scoreboard'
 import Problem from './pages/problem'
 import Problems from './pages/problems'
+import ResetPassword from './pages/reset-password'
 import Settings from './pages/settings'
 import SignIn from './pages/sign-in'
 import Submission from './pages/submission'
@@ -33,8 +33,8 @@ export const router = createBrowserRouter([
         element: <CompletePassword />,
       },
       {
-        path: '/forget-password',
-        element: <ForgetPassword />,
+        path: '/reset-password',
+        element: <ResetPassword />,
       },
       {
         path: '/problems',

@@ -1,4 +1,5 @@
 import ProblemTabs from '@/components/problem-tabs'
+import TestcaseTable from '@/components/testcase-table'
 import { clsx } from 'clsx'
 import { useState } from 'react'
 
@@ -11,14 +12,14 @@ export default function Problem() {
   const [page, setPage] = useState(1)
 
   return (
-    <div className="-mt-8 bg-white px-6 lg:px-8">
+    <div className="-mt-8 bg-white px-0 lg:px-8">
       <ProblemTabs page={page} setPage={setPage} />
 
       <div className="mx-auto max-w-3xl text-base leading-7 text-gray-700">
         <div
           className={clsx(
             'mx-4 mt-8 max-w-3xl text-base leading-7 text-gray-700',
-            page === 1 ? 'block' : 'hidden'
+            page !== 1 && 'hidden'
           )}
         >
           <p className="text-base font-semibold leading-7 text-indigo-600">
@@ -29,9 +30,10 @@ export default function Problem() {
           </h1>
           <p className="mt-4 text-xl leading-8">{problem.description}</p>
         </div>
+        <TestcaseTable />
       </div>
 
-      <div className={clsx('h-screen', page === 2 ? 'block' : 'hidden')}>
+      <div className={clsx('h-screen', page !== 2 && 'hidden')}>
         <iframe
           className="h-full w-full"
           src="https://africau.edu/images/default/sample.pdf"

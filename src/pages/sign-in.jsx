@@ -1,5 +1,6 @@
-import { handleSignIn } from '@/apis/authentication'
+import { handleSignIn } from '@/api/authentication'
 import { Square3Stack3DIcon } from '@heroicons/react/24/outline'
+import {} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 export default function SignIn() {
@@ -24,12 +25,13 @@ export default function SignIn() {
             method="POST"
             onSubmit={async (event) => {
               event.preventDefault()
-              const isSignIn = await handleSignIn({
+              const response = await handleSignIn({
                 username: event.target.username.value,
                 password: event.target.password.value,
               })
-              if (isSignIn === true) navigate('/')
-              else navigate('/complete-password')
+              if (response === null) navigate('/')
+              if (response === 'CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED')
+                navigate('/complete-password')
             }}
           >
             <div>
@@ -62,7 +64,7 @@ export default function SignIn() {
                 <div className="text-sm">
                   <Link
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
-                    to="/forget-password"
+                    to="/reset-password"
                   >
                     Forgot password?
                   </Link>

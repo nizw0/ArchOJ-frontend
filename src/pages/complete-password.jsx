@@ -1,4 +1,4 @@
-import { handleSignIn } from '@/apis/authentication'
+import { handleSignIn } from '@/api/authentication'
 import { Square3Stack3DIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router'
 
@@ -24,12 +24,12 @@ export default function CompletePassword() {
             method="POST"
             onSubmit={async (event) => {
               event.preventDefault()
-              const isSignIn = await handleSignIn({
+              const response = await handleSignIn({
                 username: event.target.username.value,
-                password: event.target['current-password'].value,
-                newPassword: event.target['new-password'].value,
+                password: event.target.currentPassword.value,
+                newPassword: event.target.newPassword.value,
               })
-              if (isSignIn) navigate('/')
+              if (response === null) navigate('/')
             }}
           >
             <div>
@@ -65,8 +65,8 @@ export default function CompletePassword() {
                   required
                   autoComplete="current-password"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  id="current-password"
-                  name="current-password"
+                  id="currentPassword"
+                  name="currentPassword"
                   type="password"
                 />
               </div>
@@ -86,8 +86,8 @@ export default function CompletePassword() {
                   required
                   autoComplete="new-password"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  id="new-password"
-                  name="new-password"
+                  id="newPassword"
+                  name="newPassword"
                   type="password"
                 />
               </div>

@@ -15,7 +15,10 @@ export default function AdminDashboardTable() {
       <h1 className="text-2xl font-semibold leading-6 text-gray-900">
         Admin Dashboard
       </h1>
-      <ul className="divide-y divide-gray-100" role="list">
+      <ul
+        className="-mx-2 mt-4 divide-y divide-gray-100 rounded-lg border-2 border-gray-100 px-2 hover:shadow-md"
+        role="list"
+      >
         {actions.map((action) => (
           <li
             className="relative flex justify-between gap-x-6 py-5"
