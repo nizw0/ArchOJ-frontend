@@ -7,12 +7,16 @@ import CompletePassword from './pages/complete-password'
 import Home from './pages/home'
 import PracticeScoreboard from './pages/practice-scoreboard'
 import Problem from './pages/problem'
+import ProblemEdit from './pages/problem-edit'
 import Problems from './pages/problems'
 import ResetPassword from './pages/reset-password'
 import Settings from './pages/settings'
 import SignIn from './pages/sign-in'
 import Submission from './pages/submission'
 import Submissions from './pages/submissions'
+import Testcase from './pages/testcase'
+import TestcaseEdit from './pages/testcase-edit'
+import TestcaseList from './pages/testcase-list'
 import Workspace from './pages/workspace'
 
 export const router = createBrowserRouter([
@@ -41,15 +45,31 @@ export const router = createBrowserRouter([
         element: <Problems />,
       },
       {
-        path: '/problems/:id',
+        path: '/problems/:problemId',
         element: <Problem />,
+      },
+      {
+        path: '/problems/:problemId/edit',
+        element: <ProblemEdit />,
+      },
+      {
+        path: '/problems/:problemId/testcases',
+        element: <TestcaseList />,
+      },
+      {
+        path: '/problems/:problemId/testcases/:testcaseId',
+        element: <Testcase />,
+      },
+      {
+        path: '/problems/:problemId/testcases/:testcaseId/edit',
+        element: <TestcaseEdit />,
       },
       {
         path: '/submissions',
         element: <Submissions />,
       },
       {
-        path: '/submissions/:id',
+        path: '/submissions/:submissionId',
         element: <Submission />,
       },
       {

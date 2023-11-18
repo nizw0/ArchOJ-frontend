@@ -1,40 +1,74 @@
-const items = [
-  { id: 1, in: '1\n1 2', out: '3' },
-  { id: 2, in: '1\n5 4', out: '9' },
-  { id: 3, in: '1\n3 6', out: '9' },
-]
+import { useNavigate } from 'react-router'
+
+const problems = Array.from({ length: 5 }, (_, i) => {
+  const v = {
+    id: i + 1,
+    input: '1\n5 3',
+    output: '9',
+  }
+  return v
+})
 
 export default function TestcaseTable() {
+  const navigate = useNavigate()
+
   return (
-    <div>
-      <ul className="divide-y divide-gray-200" role="list">
-        {items.map((item) => (
-          <li className="px-4 py-4" key={item.id}>
-            <dl className="mt-0 grid grid-cols-2 divide-x divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
-              <div className="p-4 sm:p-6" key={item.name}>
-                <dt className="-mt-2 mb-2 text-xs font-medium text-gray-900">
-                  Input
-                </dt>
-                <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
-                  <div className="flex items-baseline whitespace-pre-wrap text-base font-semibold">
-                    {item.in}
-                  </div>
-                </dd>
-              </div>
-              <div className="p-4 sm:p-6" key={item.name}>
-                <dt className="-mt-2 mb-2 text-xs font-medium text-gray-900">
-                  Output
-                </dt>
-                <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
-                  <div className="flex items-baseline text-base font-semibold">
-                    {item.out}
-                  </div>
-                </dd>
-              </div>
-            </dl>
-          </li>
-        ))}
-      </ul>
+    <div className="px-4 sm:px-6 lg:px-8">
+      {/* Header */}
+      <div className="sm:flex sm:items-center">
+        <div className="sm:flex-auto">
+          <h1 className="text-base font-semibold leading-6 text-gray-900">
+            Testcases
+          </h1>
+        </div>
+      </div>
+
+      {/* Table */}
+      <div className="-mx-4 mt-4 sm:-mx-0">
+        <table className="min-w-full divide-y divide-gray-300">
+          <thead>
+            <tr>
+              <th
+                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                scope="col"
+              >
+                Id
+              </th>
+              <th
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                scope="col"
+              >
+                Input
+              </th>
+              <th
+                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
+                scope="col"
+              >
+                Output
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200 bg-white">
+            {problems.map((problem) => (
+              <tr
+                className="hover:bg-gray-100"
+                key={problem.id}
+                onClick={() => navigate(`${problem.id}`)}
+              >
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-0">
+                  {problem.id}
+                </td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-500">
+                  {problem.input}
+                </td>
+                <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                  {problem.output}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }
