@@ -1,3 +1,4 @@
+import { handleSignOut } from '@/api/authentication'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import {
@@ -30,8 +31,6 @@ const navigation = [
   { name: 'Competition', to: '/competition', icon: ChartBarIcon },
   { name: 'Dashboard', to: '/admin-dashboard', icon: ChartPieIcon },
 ]
-const userNavigation = [{ name: 'Sign out', to: '#' }]
-
 const isLogin = false
 
 export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
@@ -282,21 +281,14 @@ export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
                       leaveTo="transform opacity-0 scale-95"
                     >
                       <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                        {userNavigation.map((item) => (
-                          <Menu.Item key={item.name}>
-                            {({ active }) => (
-                              <Link
-                                to={item.to}
-                                className={clsx(
-                                  'block px-3 py-1 text-sm leading-6 text-gray-900',
-                                  active ? 'bg-gray-50' : ''
-                                )}
-                              >
-                                {item.name}
-                              </Link>
-                            )}
-                          </Menu.Item>
-                        ))}
+                        <Menu.Item>
+                          <button
+                            className="block px-3 py-1 text-sm leading-6 text-gray-900"
+                            onClick={handleSignOut}
+                          >
+                            Sign out
+                          </button>
+                        </Menu.Item>
                       </Menu.Items>
                     </Transition>
                   </>

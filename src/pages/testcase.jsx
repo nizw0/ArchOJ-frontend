@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router'
 
 const testcase = {
   id: '12345',
-  in: '1 2 3',
+  in: '1\n2 3',
   out: '5',
 }
 export default function Testcase() {
@@ -25,13 +25,13 @@ export default function Testcase() {
       <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
           <dt className="truncate text-sm font-medium text-gray-500">Input</dt>
-          <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
+          <dd className="mt-1 whitespace-pre-wrap text-xl font-semibold tracking-tight text-gray-900">
             {testcase.in}
           </dd>
         </div>
         <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
           <dt className="truncate text-sm font-medium text-gray-500">Output</dt>
-          <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
+          <dd className="mt-1 whitespace-pre-wrap text-xl font-semibold tracking-tight text-gray-900">
             {testcase.out}
           </dd>
         </div>
