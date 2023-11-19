@@ -1,17 +1,18 @@
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
-const actions = Array.from({ length: 1 }, () => {
-  const v = {
+const actions = [
+  {
     name: 'Create a new enviroment',
     comment: 'This action would create a new app.',
-  }
-  return v
-})
+  },
+]
 
 export default function AdminDashboardTable() {
+  const { actionId } = useParams()
+
   return (
-    <>
+    <div>
       <h1 className="text-2xl font-semibold leading-6 text-gray-900">
         Admin Dashboard
       </h1>
@@ -27,7 +28,7 @@ export default function AdminDashboardTable() {
             <div className="flex min-w-0 gap-x-4">
               <div className="min-w-0 flex-auto">
                 <p className="text-sm font-semibold leading-6 text-gray-900 ">
-                  <Link to="/action/1">
+                  <Link to={`/action/${actionId}`}>
                     <span className="absolute inset-x-0 -top-px bottom-0" />
                     {action.name}
                   </Link>
@@ -46,6 +47,6 @@ export default function AdminDashboardTable() {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   )
 }

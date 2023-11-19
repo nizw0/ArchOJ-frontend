@@ -2,6 +2,7 @@ import {
   autoSignIn,
   confirmResetPassword,
   confirmSignIn,
+  fetchUserAttributes,
   getCurrentUser,
   resetPassword,
   signIn,
@@ -15,6 +16,7 @@ export async function getUser() {
     return user
   } catch (err) {
     console.log(err)
+    return null
   }
 }
 
@@ -118,6 +120,15 @@ export async function handleConfirmResetPassword({
 export async function handleUpdatePassword(oldPassword, newPassword) {
   try {
     await updatePassword({ oldPassword, newPassword })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export async function handleFetchUserAttributes() {
+  try {
+    const userAttributes = await fetchUserAttributes()
+    return userAttributes
   } catch (err) {
     console.log(err)
   }

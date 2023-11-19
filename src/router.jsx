@@ -18,6 +18,8 @@ import Testcase from './pages/testcase'
 import TestcaseEdit from './pages/testcase-edit'
 import TestcaseList from './pages/testcase-list'
 import Workspace from './pages/workspace'
+import AdminRoute from './route-components/admin-route'
+import UserRoute from './route-components/user-route'
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +50,50 @@ export const router = createBrowserRouter([
         path: '/problems/:problemId',
         element: <Problem />,
       },
+    ],
+  },
+  {
+    path: '/',
+    element: (
+      <UserRoute>
+        <Layout />
+      </UserRoute>
+    ),
+    children: [
+      {
+        path: '/submissions',
+        element: <Submissions />,
+      },
+      {
+        path: '/submissions/:submissionId',
+        element: <Submission />,
+      },
+      {
+        path: '/workspace',
+        element: <Workspace />,
+      },
+      {
+        path: '/practice',
+        element: <PracticeScoreboard />,
+      },
+      {
+        path: '/competition',
+        element: <CompetitionScoreboard />,
+      },
+      {
+        path: '/settings',
+        element: <Settings />,
+      },
+    ],
+  },
+  {
+    path: '/',
+    element: (
+      <AdminRoute>
+        <Layout />
+      </AdminRoute>
+    ),
+    children: [
       {
         path: '/problems/:problemId/edit',
         element: <ProblemEdit />,
@@ -65,36 +111,12 @@ export const router = createBrowserRouter([
         element: <TestcaseEdit />,
       },
       {
-        path: '/submissions',
-        element: <Submissions />,
-      },
-      {
-        path: '/submissions/:submissionId',
-        element: <Submission />,
-      },
-      {
-        path: '/workspace',
-        element: <Workspace />,
-      },
-      {
         path: '/admin-dashboard',
         element: <AdminDashboard />,
       },
       {
-        path: '/practice',
-        element: <PracticeScoreboard />,
-      },
-      {
-        path: '/competition',
-        element: <CompetitionScoreboard />,
-      },
-      {
-        path: '/action/:id',
+        path: '/action/:actionId',
         element: <Action />,
-      },
-      {
-        path: '/settings',
-        element: <Settings />,
       },
     ],
   },

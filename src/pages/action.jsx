@@ -1,3 +1,3 @@
-export default function Action() {
+export default function action() {
   return <></>
 }

@@ -1,8 +1,11 @@
-import { handleSignIn } from '@/api/authentication'
+import { getUser, handleSignIn } from '@/api/authentication'
+import { userState } from '@/atoms'
 import { Square3Stack3DIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router'
+import { useSetRecoilState } from 'recoil'
 
 export default function CompletePassword() {
+  const setUser = useSetRecoilState(userState)
   const navigate = useNavigate()
 
   return (
@@ -29,7 +32,10 @@ export default function CompletePassword() {
                 password: event.target.currentPassword.value,
                 newPassword: event.target.newPassword.value,
               })
-              if (response === null) navigate('/')
+              if (response === null) {
+                setUser(await getUser())
+                navigate('/')
+              }
             }}
           >
             <div>

@@ -1,4 +1,5 @@
 import { handleSignOut } from '@/api/authentication'
+import { adminState, signInState, userState } from '@/atoms'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import {
@@ -17,25 +18,71 @@ import { clsx } from 'clsx'
 import { Fragment, useEffect, useState } from 'react'
 import { Outlet, useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
 function AppIcon() {
   return <Square3Stack3DIcon className="h-8 w-auto stroke-white" />
 }
 
-const navigation = [
-  { name: 'Home', to: '/', icon: HomeIcon },
-  { name: 'Problems', to: '/problems', icon: DocumentDuplicateIcon },
-  { name: 'Submissions', to: '/submissions', icon: FolderIcon },
-  { name: 'Workspace', to: '/workspace', icon: ComputerDesktopIcon },
-  { name: 'Practice', to: '/practice', icon: ChartBarIcon },
-  { name: 'Competition', to: '/competition', icon: ChartBarIcon },
-  { name: 'Dashboard', to: '/admin-dashboard', icon: ChartPieIcon },
+const navigations = [
+  { name: 'Home', to: '/', icon: HomeIcon, authRequired: '' },
+  {
+    name: 'Problems',
+    to: '/problems',
+    icon: DocumentDuplicateIcon,
+    authRequired: '',
+  },
+  {
+    name: 'Submissions',
+    to: '/submissions',
+    icon: FolderIcon,
+    authRequired: 'user',
+  },
+  {
+    name: 'Workspace',
+    to: '/workspace',
+    icon: ComputerDesktopIcon,
+    authRequired: 'user',
+  },
+  {
+    name: 'Practice',
+    to: '/practice',
+    icon: ChartBarIcon,
+    authRequired: 'user',
+  },
+  {
+    name: 'Competition',
+    to: '/competition',
+    icon: ChartBarIcon,
+    authRequired: 'user',
+  },
+  {
+    name: 'Dashboard',
+    to: '/admin-dashboard',
+    icon: ChartPieIcon,
+    authRequired: 'admin',
+  },
 ]
-const isLogin = false
 
 export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [user, setUser] = useRecoilState(userState)
+  const isSignIn = useRecoilValue(signInState)
+  const isAdmin = useRecoilValue(adminState)
   const location = useLocation()
+
+  const checkPath = ({ name, to }) => {
+    return name === 'Home'
+      ? location.pathname === '/'
+      : location.pathname.includes(to)
+  }
+  const checkPermission = (expression) => {
+    return expression === 'admin'
+      ? isAdmin
+      : expression === 'user'
+        ? isSignIn
+        : true
+  }
 
   return (
     <div>
@@ -100,28 +147,28 @@ export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
                     <ul className="flex flex-1 flex-col gap-y-7" role="list">
                       <li>
                         <ul className="-mx-2 space-y-1" role="list">
-                          {navigation.map((item) => (
-                            <li key={item.name}>
-                              <Link
-                                to={item.to}
-                                className={clsx(
-                                  (item.name === 'Home' &&
-                                    location.pathname === '/') ||
-                                    (item.name !== 'Home' &&
-                                      location.pathname.includes(item.to))
-                                    ? 'bg-gray-800 text-white'
-                                    : 'text-gray-400 hover:bg-gray-800 hover:text-white',
-                                  'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
-                                )}
-                              >
-                                <item.icon
-                                  aria-hidden="true"
-                                  className="h-6 w-6 shrink-0"
-                                />
-                                {item.name}
-                              </Link>
-                            </li>
-                          ))}
+                          {navigations.map(
+                            (item) =>
+                              checkPermission(item.authRequired) && (
+                                <li key={item.name}>
+                                  <Link
+                                    to={item.to}
+                                    className={clsx(
+                                      checkPath(item)
+                                        ? 'bg-gray-800 text-white'
+                                        : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                                      'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
+                                    )}
+                                  >
+                                    <item.icon
+                                      aria-hidden="true"
+                                      className="h-6 w-6 shrink-0"
+                                    />
+                                    {item.name}
+                                  </Link>
+                                </li>
+                              )
+                          )}
                         </ul>
                       </li>
                       <li className="mt-auto">
@@ -161,46 +208,49 @@ export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
             <ul className="flex flex-1 flex-col gap-y-7" role="list">
               <li>
                 <ul className="-mx-2 space-y-1" role="list">
-                  {navigation.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        to={item.to}
-                        className={clsx(
-                          'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
-                          (item.name === 'Home' && location.pathname === '/') ||
-                            (item.name !== 'Home' &&
-                              location.pathname.includes(item.to))
-                            ? 'bg-gray-800 text-white'
-                            : 'text-gray-400 hover:bg-gray-800 hover:text-white'
-                        )}
-                      >
-                        <item.icon
-                          aria-hidden="true"
-                          className="h-6 w-6 shrink-0"
-                        />
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
+                  {navigations.map(
+                    (item) =>
+                      checkPermission(item.authRequired) && (
+                        <li key={item.name}>
+                          <Link
+                            to={item.to}
+                            className={clsx(
+                              'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
+                              checkPath(item)
+                                ? 'bg-gray-800 text-white'
+                                : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                            )}
+                          >
+                            <item.icon
+                              aria-hidden="true"
+                              className="h-6 w-6 shrink-0"
+                            />
+                            {item.name}
+                          </Link>
+                        </li>
+                      )
+                  )}
                 </ul>
               </li>
-              <li className="mt-auto">
-                <Link
-                  to="/settings"
-                  className={clsx(
-                    'group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
-                    location.pathname === '/settings'
-                      ? 'bg-gray-800 text-white'
-                      : 'text-gray-400 hover:bg-gray-800 hover:text-white'
-                  )}
-                >
-                  <Cog6ToothIcon
-                    aria-hidden="true"
-                    className="h-6 w-6 shrink-0"
-                  />
-                  Settings
-                </Link>
-              </li>
+              {user && (
+                <li className="mt-auto">
+                  <Link
+                    to="/settings"
+                    className={clsx(
+                      'group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
+                      location.pathname === '/settings'
+                        ? 'bg-gray-800 text-white'
+                        : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                    )}
+                  >
+                    <Cog6ToothIcon
+                      aria-hidden="true"
+                      className="h-6 w-6 shrink-0"
+                    />
+                    Settings
+                  </Link>
+                </li>
+              )}
             </ul>
           </nav>
         </div>
@@ -230,17 +280,19 @@ export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
               </div>
             </div>
             <div className="flex items-center gap-x-4 lg:gap-x-6">
-              <button
-                className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                type="button"
-                onClick={() => {
-                  if (location.pathname !== '/problems')
-                    setProblemId(location.pathname.split('/').pop())
-                  setIsModalOpen(!isModalOpen)
-                }}
-              >
-                Submit
-              </button>
+              {isSignIn && (
+                <button
+                  className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  type="button"
+                  onClick={() => {
+                    if (location.pathname !== '/problems')
+                      setProblemId(location.pathname.split('/').pop())
+                    setIsModalOpen(!isModalOpen)
+                  }}
+                >
+                  Submit
+                </button>
+              )}
               {/* Separator */}
               <div
                 aria-hidden="true"
@@ -249,7 +301,7 @@ export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
 
               {/* Profile dropdown */}
               <Menu as="div" className="relative">
-                {isLogin ? (
+                {user !== null ? (
                   <>
                     <Menu.Button className="-m-1.5 flex items-center p-1.5">
                       <span className="sr-only">Open user menu</span>
@@ -284,7 +336,10 @@ export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
                         <Menu.Item>
                           <button
                             className="block px-3 py-1 text-sm leading-6 text-gray-900"
-                            onClick={handleSignOut}
+                            onClick={async () => {
+                              await handleSignOut()
+                              setUser(null)
+                            }}
                           >
                             Sign out
                           </button>
