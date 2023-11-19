@@ -55,9 +55,9 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <UserRoute>
-        <Layout />
-      </UserRoute>
+      <Layout>
+        <UserRoute />
+      </Layout>
     ),
     children: [
       {
@@ -89,9 +89,9 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <AdminRoute>
-        <Layout />
-      </AdminRoute>
+      <Layout>
+        <AdminRoute />
+      </Layout>
     ),
     children: [
       {
