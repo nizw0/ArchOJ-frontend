@@ -1,8 +1,10 @@
+import { adminState } from '@/atoms'
 import ProblemTabs from '@/components/problem-tabs'
 import ProblemTestcaseTable from '@/components/problem-testcase-table'
 import { clsx } from 'clsx'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
+import { useRecoilValue } from 'recoil'
 
 const problem = {
   name: 'This is question name',
@@ -11,6 +13,7 @@ const problem = {
 
 export default function Problem() {
   const [page, setPage] = useState(1)
+  const isAdmin = useRecoilValue(adminState)
   const navigate = useNavigate()
 
   return (
@@ -33,22 +36,24 @@ export default function Problem() {
             </h1>
             <p className="mt-4 text-xl leading-8">{problem.description}</p>
           </div>
-          <div className="mt-4 flex flex-col justify-between space-y-2 py-8 sm:flex-row sm:items-center sm:space-y-0 sm:py-0">
-            <button
-              className="mr-4 rounded-md bg-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black"
-              type="button"
-              onClick={() => navigate('testcases')}
-            >
-              View testcases
-            </button>
-            <button
-              className="mr-4 rounded-md bg-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black"
-              type="button"
-              onClick={() => navigate('edit')}
-            >
-              Edit
-            </button>
-          </div>
+          {isAdmin && (
+            <div className="mt-4 flex flex-col justify-between space-y-2 py-8 sm:flex-row sm:items-center sm:space-y-0 sm:py-0">
+              <button
+                className="mr-4 rounded-md bg-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black"
+                type="button"
+                onClick={() => navigate('testcases')}
+              >
+                View testcases
+              </button>
+              <button
+                className="mr-4 rounded-md bg-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black"
+                type="button"
+                onClick={() => navigate('edit')}
+              >
+                Edit
+              </button>
+            </div>
+          )}
         </div>
         <ProblemTestcaseTable />
       </div>

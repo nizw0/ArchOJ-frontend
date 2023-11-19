@@ -16,9 +16,9 @@ import {
 } from '@heroicons/react/24/outline'
 import { clsx } from 'clsx'
 import { Fragment, useEffect, useState } from 'react'
-import { Outlet, useLocation } from 'react-router'
+import { Outlet, useLocation, useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 function AppIcon() {
   return <Square3Stack3DIcon className="h-8 w-auto stroke-white" />
@@ -66,9 +66,10 @@ const navigations = [
 
 export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [user, setUser] = useRecoilState(userState)
+  const setUser = useSetRecoilState(userState)
   const isSignIn = useRecoilValue(signInState)
   const isAdmin = useRecoilValue(adminState)
+  const navigate = useNavigate()
   const location = useLocation()
 
   const checkPath = ({ name, to }) => {
@@ -232,7 +233,7 @@ export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
                   )}
                 </ul>
               </li>
-              {user && (
+              {isSignIn && (
                 <li className="mt-auto">
                   <Link
                     to="/settings"
@@ -301,7 +302,7 @@ export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
 
               {/* Profile dropdown */}
               <Menu as="div" className="relative">
-                {user !== null ? (
+                {isSignIn ? (
                   <>
                     <Menu.Button className="-m-1.5 flex items-center p-1.5">
                       <span className="sr-only">Open user menu</span>
@@ -339,6 +340,7 @@ export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
                             onClick={async () => {
                               await handleSignOut()
                               setUser(null)
+                              navigate('/')
                             }}
                           >
                             Sign out

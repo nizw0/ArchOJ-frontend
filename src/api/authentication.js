@@ -131,5 +131,6 @@ export async function handleFetchUserAttributes() {
     return userAttributes
   } catch (err) {
     console.log(err)
+    return {}
   }
 }

@@ -17,7 +17,7 @@ export default function Layout() {
       setUser(user)
 
       const userAttributes = await handleFetchUserAttributes()
-      setIsAdmin(!!userAttributes.isAdmin ?? false)
+      setIsAdmin(!!userAttributes?.isAdmin ?? false)
     }
 
     updateState()
