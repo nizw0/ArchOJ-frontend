@@ -1,6 +1,9 @@
-import { handleSignOut, handleUpdatePassword } from '@/api/authentication'
+import { handleSignOut, handleUpdatePassword } from '@/api/index.js'
+import { useLoaderData } from 'react-router'
 
 export default function Settings() {
+  const attributes = useLoaderData()
+
   return (
     <>
       <div>
@@ -17,39 +20,22 @@ export default function Settings() {
                 </p>
               </div>
 
-              <form className="md:col-span-2" onSubmit={() => {}}>
+              <form className="md:col-span-2">
                 <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                   <div className="sm:col-span-3">
                     <label
                       className="block text-sm font-medium leading-6"
                       htmlFor="first-name"
                     >
-                      First name
+                      Name
                     </label>
                     <div className="mt-2">
                       <input
-                        autoComplete="given-name"
+                        autoComplete="name"
                         className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                        id="first-name"
-                        name="first-name"
-                        type="text"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="sm:col-span-3">
-                    <label
-                      className="block text-sm font-medium leading-6"
-                      htmlFor="last-name"
-                    >
-                      Last name
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        autoComplete="family-name"
-                        className="block w-full rounded-md border-0  py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                        id="last-name"
-                        name="last-name"
+                        defaultValue={attributes.name}
+                        id="name"
+                        name="name"
                         type="text"
                       />
                     </div>
@@ -57,7 +43,7 @@ export default function Settings() {
 
                   <div className="col-span-full">
                     <label
-                      className="block text-sm font-medium leading-6 "
+                      className="block text-sm font-medium leading-6"
                       htmlFor="email"
                     >
                       Email address
@@ -66,6 +52,7 @@ export default function Settings() {
                       <input
                         autoComplete="email"
                         className="block w-full rounded-md border-0  py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                        defaultValue={attributes.email}
                         id="email"
                         name="email"
                         type="email"

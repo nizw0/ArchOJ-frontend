@@ -1,3 +1,4 @@
+import { createProblem } from '@/api'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Fragment } from 'react'
@@ -21,7 +22,16 @@ export default function ProblemSlide({ isOpen, setIsOpen }) {
                 leaveTo="translate-x-full"
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                  <form className="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl">
+                  <form
+                    className="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl"
+                    onSubmit={async (event) => {
+                      event.preventDefault()
+                      await createProblem({
+                        name: event.target.name.value,
+                        description: event.target.description.value,
+                      })
+                    }}
+                  >
                     <div className="h-0 flex-1 overflow-y-auto">
                       <div className="bg-indigo-700 px-4 py-6 sm:px-6">
                         <div className="flex items-center justify-between">
@@ -50,15 +60,15 @@ export default function ProblemSlide({ isOpen, setIsOpen }) {
                             <div>
                               <label
                                 className="block text-sm font-medium leading-6 text-gray-900"
-                                htmlFor="project-name"
+                                htmlFor="name"
                               >
-                                Problem Name
+                                Name
                               </label>
                               <div className="mt-2">
                                 <input
                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                  id="project-name"
-                                  name="project-name"
+                                  id="name"
+                                  name="name"
                                   type="text"
                                 />
                               </div>

@@ -1,4 +1,4 @@
-import { handleSignOut } from '@/api/authentication'
+import { handleSignOut } from '@/api/index.js'
 import { adminState, signInState, userState } from '@/atoms'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'

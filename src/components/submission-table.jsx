@@ -1,22 +1,11 @@
 import { clsx } from 'clsx'
 import { useNavigate } from 'react-router'
 
-const submissions = Array.from({ length: 100 }, (_, i) => {
-  const v = {
-    id: '1',
-    problemId: '1',
-    problemTitle: 'MYSQL n+1 problem',
-    userId: '1',
-    language: 'CPP',
-    runtime: '2.13s',
-    status: 'Accepted',
-    time: '5 days ago',
-  }
-  v.id = i + 1
-  return v
-})
-
-export default function SubmissionTable({ currentPage, setCurrentPage }) {
+export default function SubmissionTable({
+  currentPage,
+  setCurrentPage,
+  submissions,
+}) {
   const navigate = useNavigate()
 
   return (

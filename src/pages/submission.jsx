@@ -1,5 +1,6 @@
 import SubmissionStats from '@/components/submission-stats'
 import { CodeBlock, github } from 'react-code-blocks'
+// import { useLoaderData } from 'react-router'
 
 const submission = {
   id: '1',
@@ -14,6 +15,8 @@ const submission = {
 }
 
 export default function Submission() {
+  // const submission = useLoaderData()
+
   return (
     <div className="bg-white px-6 lg:px-8">
       <div className="mx-auto max-w-3xl text-base leading-7 text-gray-700">

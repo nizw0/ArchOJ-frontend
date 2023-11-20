@@ -1,4 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
+import { getSubmissionById, getUserAttributes, listSubmissions } from './api'
+import { getProblemById, listProblems } from './api/problem'
 import Layout from './layout'
 import Action from './pages/action'
 import AdminDashboard from './pages/admin-dashboard'
@@ -29,6 +31,9 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
+        loader: async () => {
+          return null
+        },
       },
       {
         path: '/sign-in',
@@ -45,10 +50,27 @@ export const router = createBrowserRouter([
       {
         path: '/problems',
         element: <Problems />,
+        loader: async () => {
+          try {
+            const { data } = await listProblems()
+            return data
+          } catch (err) {
+            return []
+          }
+        },
       },
       {
         path: '/problems/:problemId',
         element: <Problem />,
+        loader: async ({ params }) => {
+          try {
+            const { problemId } = params
+            const { data } = await getProblemById(problemId)
+            return data
+          } catch (err) {
+            return {}
+          }
+        },
       },
     ],
   },
@@ -63,26 +85,56 @@ export const router = createBrowserRouter([
       {
         path: '/submissions',
         element: <Submissions />,
+        loader: async () => {
+          try {
+            const { data } = await listSubmissions()
+            return data
+          } catch (err) {
+            return []
+          }
+        },
       },
       {
         path: '/submissions/:submissionId',
         element: <Submission />,
+        loader: async ({ params }) => {
+          try {
+            const { submissionId } = params
+            const { data } = await getSubmissionById(submissionId)
+            return data
+          } catch (err) {
+            return {}
+          }
+        },
       },
       {
         path: '/workspace',
         element: <Workspace />,
+        loader: async () => {
+          return null
+        },
       },
       {
         path: '/practice',
         element: <PracticeScoreboard />,
+        loader: async () => {
+          return null
+        },
       },
       {
         path: '/competition',
         element: <CompetitionScoreboard />,
+        loader: async () => {
+          return null
+        },
       },
       {
         path: '/settings',
         element: <Settings />,
+        loader: async () => {
+          const attributes = await getUserAttributes()
+          return attributes
+        },
       },
     ],
   },

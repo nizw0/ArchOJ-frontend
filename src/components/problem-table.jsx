@@ -2,17 +2,8 @@ import { adminState } from '@/atoms'
 import { useNavigate } from 'react-router'
 import { useRecoilValue } from 'recoil'
 
-const problems = Array.from({ length: 100 }, (_, i) => {
-  const v = {
-    id: i + 1,
-    name: 'MYSQL n+1 problem',
-    description: 'This is a SQL problem',
-    tags: 'Array, String',
-  }
-  return v
-})
-
 export default function ProblemTable({
+  problems,
   isSlideOpen,
   setIsSlideOpen,
   currentPage,
@@ -69,28 +60,32 @@ export default function ProblemTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
-            {problems
-              .slice(
-                (currentPage - 1) * 10,
-                Math.min(problems.length, currentPage * 10)
-              )
-              .map((problem) => (
-                <tr
-                  className="hover:bg-gray-100"
-                  key={problem.id}
-                  onClick={() => navigate(`${problem.id}`)}
-                >
-                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-0">
-                    {problem.id}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-500">
-                    {problem.name}
-                  </td>
-                  <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                    {problem.description}
-                  </td>
-                </tr>
-              ))}
+            {problems.length ? (
+              problems
+                .slice(
+                  (currentPage - 1) * 10,
+                  Math.min(problems.length, currentPage * 10)
+                )
+                .map((problem) => (
+                  <tr
+                    className="hover:bg-gray-100"
+                    key={problem.id}
+                    onClick={() => navigate(`${problem.id}`)}
+                  >
+                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-0">
+                      {problem.id}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-500">
+                      {problem.name}
+                    </td>
+                    <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                      {problem.description}
+                    </td>
+                  </tr>
+                ))
+            ) : (
+              <></>
+            )}
           </tbody>
         </table>
       </div>

@@ -37,7 +37,12 @@ export default function SubmissionModal({ isOpen, setIsOpen, problemId = '' }) {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-visible rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
-                <div>
+                <form
+                  onSubmit={(event) => {
+                    event.preventDefault()
+                    console.log(event.target)
+                  }}
+                >
                   <div className="mt-0 space-y-2 text-center">
                     <Dialog.Title
                       as="h3"
@@ -76,16 +81,16 @@ export default function SubmissionModal({ isOpen, setIsOpen, problemId = '' }) {
                       <SelectMenus items={languageItems} />
                     </div>
                   </div>
-                </div>
-                <div className="mt-5 sm:mt-6">
-                  <button
-                    className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    type="button"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Upload
-                  </button>
-                </div>
+                  <div className="mt-5 sm:mt-6">
+                    <button
+                      className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      type="submit"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Upload
+                    </button>
+                  </div>
+                </form>
               </Dialog.Panel>
             </Transition.Child>
           </div>

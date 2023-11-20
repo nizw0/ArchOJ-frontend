@@ -1,7 +1,4 @@
-import {
-  handleConfirmResetPassword,
-  handleResetPassword,
-} from '@/api/authentication'
+import { handleConfirmResetPassword, handleResetPassword } from '@/api/index.js'
 import { Square3Stack3DIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'

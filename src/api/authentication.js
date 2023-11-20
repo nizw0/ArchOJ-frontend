@@ -2,23 +2,11 @@ import {
   autoSignIn,
   confirmResetPassword,
   confirmSignIn,
-  fetchUserAttributes,
-  getCurrentUser,
   resetPassword,
   signIn,
   signOut,
   updatePassword,
 } from 'aws-amplify/auth'
-
-export async function getUser() {
-  try {
-    const user = await getCurrentUser()
-    return user
-  } catch (err) {
-    console.log(err)
-    return null
-  }
-}
 
 export async function handleSignIn({
   username,
@@ -122,15 +110,5 @@ export async function handleUpdatePassword(oldPassword, newPassword) {
     await updatePassword({ oldPassword, newPassword })
   } catch (err) {
     console.log(err)
-  }
-}
-
-export async function handleFetchUserAttributes() {
-  try {
-    const userAttributes = await fetchUserAttributes()
-    return userAttributes
-  } catch (err) {
-    console.log(err)
-    return {}
   }
 }

@@ -3,17 +3,13 @@ import ProblemTabs from '@/components/problem-tabs'
 import ProblemTestcaseTable from '@/components/problem-testcase-table'
 import { clsx } from 'clsx'
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useLoaderData, useNavigate } from 'react-router'
 import { useRecoilValue } from 'recoil'
-
-const problem = {
-  name: 'This is question name',
-  description: 'Testing description.',
-}
 
 export default function Problem() {
   const [page, setPage] = useState(1)
   const isAdmin = useRecoilValue(adminState)
+  const problem = useLoaderData()
   const navigate = useNavigate()
 
   return (

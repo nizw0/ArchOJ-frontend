@@ -1,4 +1,4 @@
-import { getUser, handleSignIn } from '@/api/authentication'
+import { getUser, handleSignIn } from '@/api/index.js'
 import { userState } from '@/atoms'
 import { Square3Stack3DIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
