@@ -1,5 +1,6 @@
+import { fetchUserAttributes } from 'aws-amplify/auth'
 import { createBrowserRouter } from 'react-router-dom'
-import { getSubmissionById, getUserAttributes, listSubmissions } from './api'
+import { getSubmissionById, getWorkspaceById, listSubmissions } from './api'
 import { getProblemById, listProblems } from './api/problem'
 import Layout from './layout'
 import Action from './pages/action'
@@ -111,7 +112,13 @@ export const router = createBrowserRouter([
         path: '/workspace',
         element: <Workspace />,
         loader: async () => {
-          return null
+          try {
+            const { sub } = await fetchUserAttributes()
+            const { data } = await getWorkspaceById(sub)
+            return data
+          } catch (err) {
+            return null
+          }
         },
       },
       {
@@ -131,10 +138,6 @@ export const router = createBrowserRouter([
       {
         path: '/settings',
         element: <Settings />,
-        loader: async () => {
-          const attributes = await getUserAttributes()
-          return attributes
-        },
       },
     ],
   },

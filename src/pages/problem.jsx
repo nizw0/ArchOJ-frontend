@@ -30,7 +30,9 @@ export default function Problem() {
             <h1 className="mt-1 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               {problem.name}
             </h1>
-            <p className="mt-4 text-xl leading-8">{problem.description}</p>
+            <p className="prose prose-sm prose-gray mt-4 whitespace-pre-wrap text-lg leading-8">
+              {problem.description}
+            </p>
           </div>
           {isAdmin && (
             <div className="mt-4 flex flex-col justify-between space-y-2 py-8 sm:flex-row sm:items-center sm:space-y-0 sm:py-0">

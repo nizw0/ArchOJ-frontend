@@ -1,5 +1,10 @@
 import { handleSignOut } from '@/api/index.js'
-import { adminState, signInState, userState } from '@/atoms'
+import {
+  adminState,
+  signInState,
+  userAttributesState,
+  userState,
+} from '@/atoms'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import {
@@ -18,7 +23,7 @@ import { clsx } from 'clsx'
 import { Fragment, useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
 function AppIcon() {
   return <Square3Stack3DIcon className="h-8 w-auto stroke-white" />
@@ -67,6 +72,8 @@ const navigations = [
 export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const setUser = useSetRecoilState(userState)
+  const [userAttributes, setUserAttributes] =
+    useRecoilState(userAttributesState)
   const isSignIn = useRecoilValue(signInState)
   const isAdmin = useRecoilValue(adminState)
   const navigate = useNavigate()
@@ -316,7 +323,7 @@ export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
                           aria-hidden="true"
                           className="ml-4 text-sm font-semibold leading-6 text-gray-900"
                         >
-                          User
+                          {userAttributes.name}
                         </span>
                         <ChevronDownIcon
                           aria-hidden="true"
@@ -340,6 +347,7 @@ export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
                             onClick={async () => {
                               await handleSignOut()
                               setUser(null)
+                              setUserAttributes({})
                               navigate('/')
                             }}
                           >

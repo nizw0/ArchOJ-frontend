@@ -18,6 +18,20 @@ export async function getProblemById(id) {
     return response.data
   } catch (err) {
     console.log(err.response.data.message)
+    throw err
+  }
+}
+
+export async function adminGetProblemById(id) {
+  try {
+    const { idToken } = (await fetchAuthSession()).tokens
+    const response = await axiosInstance.get(`${path}/${id}`, {
+      headers: { Authorization: `Bearer ${idToken}` },
+    })
+    return response.data
+  } catch (err) {
+    console.log(err.response.data.message)
+    throw err
   }
 }
 

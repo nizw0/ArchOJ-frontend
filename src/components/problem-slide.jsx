@@ -1,9 +1,12 @@
 import { createProblem } from '@/api'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 
 export default function ProblemSlide({ isOpen, setIsOpen }) {
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+
   return (
     <Transition.Root as={Fragment} className="z-50" show={isOpen}>
       <Dialog as="div" className="relative z-10" onClose={setIsOpen}>
@@ -26,10 +29,7 @@ export default function ProblemSlide({ isOpen, setIsOpen }) {
                     className="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl"
                     onSubmit={async (event) => {
                       event.preventDefault()
-                      await createProblem({
-                        name: event.target.name.value,
-                        description: event.target.description.value,
-                      })
+                      await createProblem({ name, description })
                     }}
                   >
                     <div className="h-0 flex-1 overflow-y-auto">
@@ -70,6 +70,9 @@ export default function ProblemSlide({ isOpen, setIsOpen }) {
                                   id="name"
                                   name="name"
                                   type="text"
+                                  onChange={(event) =>
+                                    setName(event.target.value)
+                                  }
                                 />
                               </div>
                             </div>
@@ -83,10 +86,12 @@ export default function ProblemSlide({ isOpen, setIsOpen }) {
                               <div className="mt-2">
                                 <textarea
                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                  defaultValue={''}
                                   id="description"
                                   name="description"
                                   rows={4}
+                                  onChange={(event) =>
+                                    setDescription(event.target.value)
+                                  }
                                 />
                               </div>
                             </div>

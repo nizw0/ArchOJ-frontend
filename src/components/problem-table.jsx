@@ -73,12 +73,12 @@ export default function ProblemTable({
                     onClick={() => navigate(`${problem.id}`)}
                   >
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-0">
-                      {problem.id}
+                      {problem.id.substring(0, 8)}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-500">
                       {problem.name}
                     </td>
-                    <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                    <td className="hidden max-w-sm truncate whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
                       {problem.description}
                     </td>
                   </tr>

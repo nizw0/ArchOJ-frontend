@@ -5,6 +5,11 @@ export const userState = atom({
   default: null,
 })
 
+export const userAttributesState = atom({
+  key: 'userAttributesState',
+  default: {},
+})
+
 export const signInState = selector({
   key: 'signInState',
   get: ({ get }) => {

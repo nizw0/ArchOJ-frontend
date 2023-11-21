@@ -1,8 +1,15 @@
-import { handleSignOut, handleUpdatePassword } from '@/api/index.js'
-import { useLoaderData } from 'react-router'
+import {
+  handleSignOut,
+  handleUpdatePassword,
+  handleUpdateUserAttributes,
+} from '@/api/index.js'
+import { userAttributesState } from '@/atoms'
+import { useNavigate } from 'react-router'
+import { useRecoilValue } from 'recoil'
 
 export default function Settings() {
-  const attributes = useLoaderData()
+  const attributes = useRecoilValue(userAttributesState)
+  const navigate = useNavigate()
 
   return (
     <>
@@ -20,12 +27,21 @@ export default function Settings() {
                 </p>
               </div>
 
-              <form className="md:col-span-2">
+              <form
+                className="md:col-span-2"
+                onSubmit={async (event) => {
+                  await handleUpdateUserAttributes({
+                    name: event.target.name.value,
+                    email: event.target.email.value,
+                  })
+                  navigate(0)
+                }}
+              >
                 <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                   <div className="sm:col-span-3">
                     <label
                       className="block text-sm font-medium leading-6"
-                      htmlFor="first-name"
+                      htmlFor="name"
                     >
                       Name
                     </label>
@@ -85,12 +101,14 @@ export default function Settings() {
               <form
                 className="md:col-span-2"
                 onSubmit={async (event) => {
+                  event.preventDefault()
                   const currentPassword = event.target.currentPassword.value
                   const newPassword = event.target.newPassword.value
                   const confirmPassword = event.target.confirmPassword.value
 
                   if (newPassword === confirmPassword) {
                     await handleUpdatePassword(currentPassword, newPassword)
+                    navigate(0)
                   }
                 }}
               >
@@ -173,7 +191,10 @@ export default function Settings() {
 
               <form
                 className="md:col-span-2"
-                onSubmit={() => handleSignOut(true)}
+                onSubmit={(event) => {
+                  event.preventDefault()
+                  handleSignOut(true)
+                }}
               >
                 <div className="mt-8 flex">
                   <button

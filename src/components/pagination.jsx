@@ -4,11 +4,14 @@ import {
 } from '@heroicons/react/20/solid'
 import { clsx } from 'clsx'
 
-const itemsCount = 100
-
-export default function Pagination({ currentPage, setCurrentPage }) {
+export default function Pagination({
+  currentPage,
+  setCurrentPage,
+  itemsCount,
+}) {
   const firstPage = 1
-  const lastPage = itemsCount / 10
+  const lastPage =
+    Number((itemsCount / 10).toFixed()) + (itemsCount % 10 ? 1 : 0)
   const pages = []
 
   for (let page = 1; page <= lastPage; page++) {
@@ -27,10 +30,6 @@ export default function Pagination({ currentPage, setCurrentPage }) {
       </a>
     )
   }
-
-  // <span className="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent">
-  //   ...
-  // </span>
 
   return (
     <nav className="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0">

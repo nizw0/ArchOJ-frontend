@@ -66,23 +66,23 @@ export default function SubmissionTable({
                   onClick={() => navigate(`${submission.id}`)}
                 >
                   <td className="hidden w-full max-w-0 py-4 pl-4 pr-3 text-sm text-gray-500 sm:table-cell sm:w-auto sm:max-w-none sm:pl-0">
-                    {submission.time}
+                    {new Date(submission.timestamp).toLocaleString()}
                   </td>
                   <td className="px-3 py-4 text-sm font-medium text-gray-900 sm:text-gray-500">
-                    {submission.problemTitle}
+                    {submission.problemName}
                     <dd className="mt-1 truncate text-gray-500 sm:hidden">
-                      {submission.time}
+                      {new Date(submission.timestamp).toLocaleString()}
                     </dd>
                   </td>
                   <td
                     className={clsx(
                       'px-3 py-4 text-sm font-medium',
-                      submission.status === 'Accepted'
+                      submission.result === 'Accepted'
                         ? 'text-green-600'
                         : 'text-red-600'
                     )}
                   >
-                    {submission.status}
+                    {submission.result || 'pending'}
                     <dl className="font-normal lg:hidden">
                       <dt className="sr-only">Runtime</dt>
                       <dt className="sr-only sm:hidden">Language</dt>

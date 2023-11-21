@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSetRecoilState } from 'recoil'
 import { getUser, getUserAttributes } from './api/index.js'
-import { adminState, userState } from './atoms'
+import { adminState, userAttributesState, userState } from './atoms'
 import Sidebar from './components/sidebar'
 import SubmissionModal from './components/submission-modal'
 
@@ -9,6 +9,7 @@ export default function Layout() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [problemId, setProblemId] = useState('')
   const setUser = useSetRecoilState(userState)
+  const setUserAttributes = useSetRecoilState(userAttributesState)
   const setIsAdmin = useSetRecoilState(adminState)
 
   useEffect(() => {
@@ -17,11 +18,12 @@ export default function Layout() {
       setUser(user)
 
       const userAttributes = await getUserAttributes()
+      setUserAttributes(userAttributes)
       setIsAdmin(!!userAttributes?.isAdmin ?? false)
     }
 
     updateState()
-  }, [setUser, setIsAdmin])
+  }, [setUser, setUserAttributes, setIsAdmin])
 
   return (
     <>

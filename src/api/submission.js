@@ -9,15 +9,22 @@ export async function listSubmissions() {
     return response.data
   } catch (err) {
     console.log(err)
+    throw err
   }
 }
 
 export async function getSubmissionById(id) {
   try {
-    const response = await axiosInstance.get(`${path}/${id}`)
+    const { idToken } = (await fetchAuthSession()).tokens
+    const response = await axiosInstance.get(`${path}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    })
     return response.data
   } catch (err) {
     console.log(err.response.data.message)
+    throw err
   }
 }
 

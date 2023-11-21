@@ -1,4 +1,8 @@
-import { fetchUserAttributes, getCurrentUser } from 'aws-amplify/auth'
+import {
+  fetchUserAttributes,
+  getCurrentUser,
+  updateUserAttributes,
+} from 'aws-amplify/auth'
 
 export async function getUser() {
   try {
@@ -17,5 +21,13 @@ export async function getUserAttributes() {
   } catch (err) {
     console.log(err)
     return {}
+  }
+}
+
+export async function handleUpdateUserAttributes({ name, email }) {
+  try {
+    await updateUserAttributes({ userAttributes: { name, email } })
+  } catch (err) {
+    console.log(err)
   }
 }

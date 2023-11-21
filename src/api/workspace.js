@@ -3,6 +3,16 @@ import { fetchAuthSession } from 'aws-amplify/auth'
 
 const path = '/workspaces'
 
+export async function getWorkspaceById(id) {
+  const { idToken } = (await fetchAuthSession()).tokens
+  const response = await axiosInstance.get(`${path}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
+  })
+  return response.data
+}
+
 export async function createWorkspace() {
   const { idToken } = (await fetchAuthSession()).tokens
   const response = await axiosInstance.post(

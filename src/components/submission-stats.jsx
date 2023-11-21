@@ -41,12 +41,12 @@ export default function Submissionsubmissions({ submission }) {
               <span
                 className={clsx(
                   'text-4xl font-semibold tracking-tight',
-                  submission.status === 'Accepted'
+                  submission.result === 'Accepted'
                     ? 'text-green-600'
                     : 'text-red-600'
                 )}
               >
-                {submission.status}
+                {submission.result || 'pending'}
               </span>
             </p>
           </div>
