@@ -1,17 +1,13 @@
-import { fetchUserAttributes } from 'aws-amplify/auth'
 import { createBrowserRouter } from 'react-router-dom'
-import { getSubmissionById, getWorkspaceById, listSubmissions } from './api'
-import { getProblemById, listProblems } from './api/problem'
 import Layout from './layout'
 import Action from './pages/action'
 import AdminDashboard from './pages/admin-dashboard'
-import CompetitionScoreboard from './pages/competition-scoreboard'
 import CompletePassword from './pages/complete-password'
 import Home from './pages/home'
-import PracticeScoreboard from './pages/practice-scoreboard'
 import Problem from './pages/problem'
 import ProblemEdit from './pages/problem-edit'
 import Problems from './pages/problems'
+import Ranking from './pages/ranking'
 import ResetPassword from './pages/reset-password'
 import Settings from './pages/settings'
 import SignIn from './pages/sign-in'
@@ -32,9 +28,6 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
-        loader: async () => {
-          return null
-        },
       },
       {
         path: '/sign-in',
@@ -51,27 +44,10 @@ export const router = createBrowserRouter([
       {
         path: '/problems',
         element: <Problems />,
-        loader: async () => {
-          try {
-            const { data } = await listProblems()
-            return data
-          } catch (err) {
-            return []
-          }
-        },
       },
       {
         path: '/problems/:problemId',
         element: <Problem />,
-        loader: async ({ params }) => {
-          try {
-            const { problemId } = params
-            const { data } = await getProblemById(problemId)
-            return data
-          } catch (err) {
-            return {}
-          }
-        },
       },
     ],
   },
@@ -86,54 +62,18 @@ export const router = createBrowserRouter([
       {
         path: '/submissions',
         element: <Submissions />,
-        loader: async () => {
-          try {
-            const { data } = await listSubmissions()
-            return data
-          } catch (err) {
-            return []
-          }
-        },
       },
       {
         path: '/submissions/:submissionId',
         element: <Submission />,
-        loader: async ({ params }) => {
-          try {
-            const { submissionId } = params
-            const { data } = await getSubmissionById(submissionId)
-            return data
-          } catch (err) {
-            return {}
-          }
-        },
       },
       {
         path: '/workspace',
         element: <Workspace />,
-        loader: async () => {
-          try {
-            const { sub } = await fetchUserAttributes()
-            const { data } = await getWorkspaceById(sub)
-            return data
-          } catch (err) {
-            return null
-          }
-        },
       },
       {
-        path: '/practice',
-        element: <PracticeScoreboard />,
-        loader: async () => {
-          return null
-        },
-      },
-      {
-        path: '/competition',
-        element: <CompetitionScoreboard />,
-        loader: async () => {
-          return null
-        },
+        path: '/ranking',
+        element: <Ranking />,
       },
       {
         path: '/settings',

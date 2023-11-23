@@ -7,7 +7,8 @@ const users = Array.from({ length: 100 }, (_, i) => {
   return v
 })
 
-export default function PracticeScoreboardTable({
+export default function RankingTable({
+  userSolveCounts,
   currentPage,
   setCurrentPage,
 }) {
@@ -25,7 +26,7 @@ export default function PracticeScoreboardTable({
           <thead>
             <tr>
               <th
-                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                className="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
                 scope="col"
               >
                 Order
@@ -52,7 +53,7 @@ export default function PracticeScoreboardTable({
               )
               .map((user, i) => (
                 <tr className="hover:bg-gray-100" key={i + 1}>
-                  <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm text-gray-500 sm:w-auto sm:max-w-none sm:pl-0">
+                  <td className="w-full max-w-0 px-4 py-4 text-sm text-gray-500 sm:w-auto sm:max-w-none">
                     {(currentPage - 1) * 10 + i + 1}
                   </td>
                   <td className="px-3 py-4 text-sm font-medium text-gray-900 sm:text-gray-500">

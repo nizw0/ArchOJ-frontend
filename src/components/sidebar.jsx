@@ -6,7 +6,7 @@ import {
   userState,
 } from '@/atoms'
 import { Dialog, Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { ChevronDownIcon, UserCircleIcon } from '@heroicons/react/20/solid'
 import {
   Bars3Icon,
   ChartBarIcon,
@@ -50,14 +50,8 @@ const navigations = [
     authRequired: 'user',
   },
   {
-    name: 'Practice',
-    to: '/practice',
-    icon: ChartBarIcon,
-    authRequired: 'user',
-  },
-  {
-    name: 'Competition',
-    to: '/competition',
+    name: 'Ranking',
+    to: '/ranking',
     icon: ChartBarIcon,
     authRequired: 'user',
   },
@@ -158,14 +152,17 @@ export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
                           {navigations.map(
                             (item) =>
                               checkPermission(item.authRequired) && (
-                                <li key={item.name}>
+                                <li
+                                  key={item.name}
+                                  onClick={() => setSidebarOpen(false)}
+                                >
                                   <Link
                                     to={item.to}
                                     className={clsx(
+                                      'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
                                       checkPath(item)
                                         ? 'bg-gray-800 text-white'
-                                        : 'text-gray-400 hover:bg-gray-800 hover:text-white',
-                                      'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
+                                        : 'text-gray-400 hover:bg-gray-800 hover:text-white'
                                     )}
                                   >
                                     <item.icon
@@ -179,7 +176,10 @@ export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
                           )}
                         </ul>
                       </li>
-                      <li className="mt-auto">
+                      <li
+                        className="mt-auto"
+                        onClick={() => setSidebarOpen(false)}
+                      >
                         <Link
                           to="/settings"
                           className={clsx(
@@ -293,8 +293,10 @@ export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
                   className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   type="button"
                   onClick={() => {
-                    if (location.pathname !== '/problems')
-                      setProblemId(location.pathname.split('/').pop())
+                    const pathList = location.pathname.split('/')
+                    if (pathList.includes('problems') && pathList.length > 2)
+                      setProblemId(pathList.pop())
+                    else setProblemId('')
                     setIsModalOpen(!isModalOpen)
                   }}
                 >
@@ -313,11 +315,7 @@ export default function Sidebar({ isModalOpen, setIsModalOpen, setProblemId }) {
                   <>
                     <Menu.Button className="-m-1.5 flex items-center p-1.5">
                       <span className="sr-only">Open user menu</span>
-                      <img
-                        alt=""
-                        className="h-8 w-8 rounded-full bg-gray-50"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      />
+                      <UserCircleIcon className="h-8 w-8 rounded-full bg-gray-50" />
                       <span className="hidden lg:flex lg:items-center">
                         <span
                           aria-hidden="true"

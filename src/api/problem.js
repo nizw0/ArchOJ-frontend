@@ -5,63 +5,85 @@ const path = '/problems'
 
 export async function listProblems() {
   try {
-    const response = await axiosInstance.get(`${path}`)
-    return response.data
+    const { data } = await axiosInstance.get(`${path}`)
+    return data.data
   } catch (err) {
-    console.log(err)
+    const { data } = err.response
+    console.log(data.message)
+    throw data
   }
 }
 
 export async function getProblemById(id) {
   try {
-    const response = await axiosInstance.get(`${path}/${id}`)
-    return response.data
+    const { data } = await axiosInstance.get(`${path}/${id}`)
+    return data.data
   } catch (err) {
-    console.log(err.response.data.message)
-    throw err
+    const { data } = err.response
+    console.log(data.message)
+    throw data
   }
 }
 
 export async function adminGetProblemById(id) {
   try {
     const { idToken } = (await fetchAuthSession()).tokens
-    const response = await axiosInstance.get(`${path}/${id}`, {
+    const { data } = await axiosInstance.get(`${path}/${id}`, {
       headers: { Authorization: `Bearer ${idToken}` },
     })
-    return response.data
+    return data.data
   } catch (err) {
-    console.log(err.response.data.message)
-    throw err
+    const { data } = err.response
+    console.log(data.message)
+    throw data
   }
 }
 
 export async function createProblem(problem) {
-  const { idToken } = (await fetchAuthSession()).tokens
-  const response = await axiosInstance.post(`${path}`, problem, {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
-  })
-  return response.data
+  try {
+    const { idToken } = (await fetchAuthSession()).tokens
+    const { data } = await axiosInstance.post(`${path}`, problem, {
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    })
+    return data.data
+  } catch (err) {
+    const { data } = err.response
+    console.log(data.message)
+    throw data
+  }
 }
 
 export async function updateProblem(problem) {
-  const { id } = problem
-  const { idToken } = (await fetchAuthSession()).tokens
-  const response = await axiosInstance.patch(`${path}/${id}`, problem, {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
-  })
-  return response.data
+  try {
+    const { id } = problem
+    const { idToken } = (await fetchAuthSession()).tokens
+    const data = await axiosInstance.patch(`${path}/${id}`, problem, {
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    })
+    return data.data
+  } catch (err) {
+    const { data } = err.response
+    console.log(data.message)
+    throw data
+  }
 }
 
 export async function deleteProblem(id) {
-  const { idToken } = (await fetchAuthSession()).tokens
-  const response = await axiosInstance.delete(`${path}/${id}`, {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
-  })
-  return response.data
+  try {
+    const { idToken } = (await fetchAuthSession()).tokens
+    const { data } = await axiosInstance.delete(`${path}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    })
+    return data.data
+  } catch (err) {
+    const { data } = err.response
+    console.log(data.message)
+    throw data
+  }
 }

@@ -1,26 +1,21 @@
 import { clsx } from 'clsx'
+import { useEffect, useState } from 'react'
 
-const submissions = Array.from({ length: 5 }, (_, i) => {
-  const v = {
-    id: '1',
-    problemId: '1',
-    problemTitle: 'MYSQL n+1 problem',
-    userId: '1',
-    language: 'CPP',
-    runtime: '2.13s',
-    status: 'Accepted',
-    time: '5 days ago',
-  }
-  v.id = i + 1
-  return v
-})
+export default function DashboardTable({ submissions }) {
+  const [latestSubmissions, setLatestSubmissions] = useState([])
 
-export default function DashboardTable() {
+  useEffect(() => {
+    if (submissions.length)
+      setLatestSubmissions(
+        submissions.sort((a, b) => a.timestamp > b.timestamp).slice(0, 5)
+      )
+  }, [submissions])
+
   return (
     <div className="mt-8">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold leading-6 text-gray-900">
+          <h1 className="text-lg font-semibold leading-6 text-gray-900">
             Latest activity
           </h1>
         </div>
@@ -28,7 +23,7 @@ export default function DashboardTable() {
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+            <div className="overflow-hidden rounded-lg shadow ring-1 ring-black ring-opacity-5">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead className="bg-gray-50">
                   <tr>
@@ -51,13 +46,19 @@ export default function DashboardTable() {
                       Status
                     </th>
                     <th
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:hidden"
+                      scope="col"
+                    >
+                      Env
+                    </th>
+                    <th
+                      className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
                       scope="col"
                     >
                       Runtime
                     </th>
                     <th
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
                       scope="col"
                     >
                       Language
@@ -65,29 +66,38 @@ export default function DashboardTable() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {submissions.map((submission) => (
+                  {latestSubmissions.map((submission) => (
                     <tr key={submission.id}>
                       <td className="hidden whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:table-cell">
-                        {submission.time}
+                        {new Date(submission.timestamp).toLocaleString()}
                       </td>
                       <td className="px-3 py-4 text-sm font-medium text-gray-900 sm:text-gray-500">
-                        {submission.problemTitle}
+                        {submission.problemName}
                       </td>
                       <td
                         className={clsx(
                           'px-3 py-4 text-sm font-medium',
-                          submission.status === 'Accepted'
+                          submission.result === 'Accepted'
                             ? 'text-green-600'
-                            : 'text-red-600'
+                            : submission.status
+                              ? 'text-red-600'
+                              : 'text-gray-600'
                         )}
                       >
-                        {submission.status}
+                        {submission.status ? submission.result : 'pending'}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {submission.runtime}
+                        <dl className="font-normal sm:hidden">
+                          <dt className="sr-only sm:hidden">Language</dt>
+                          <dd className="mt-1 truncate text-gray-500 lg:hidden">
+                            {submission.language}
+                          </dd>
+                        </dl>
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
                         {submission.language}
+                        <br />
                       </td>
                     </tr>
                   ))}

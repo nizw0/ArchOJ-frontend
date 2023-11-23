@@ -25,12 +25,12 @@ export default function CompletePassword() {
             action="#"
             className="space-y-6"
             method="POST"
-            onSubmit={async (event) => {
-              event.preventDefault()
+            onSubmit={async (e) => {
+              e.preventDefault()
               const response = await handleSignIn({
-                username: event.target.username.value,
-                password: event.target.currentPassword.value,
-                newPassword: event.target.newPassword.value,
+                username: e.target.username.value,
+                password: e.target.currentPassword.value,
+                newPassword: e.target.newPassword.value,
               })
               if (response === null) {
                 setUser(await getUser())

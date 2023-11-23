@@ -1,3 +1,4 @@
+import { useCreateSubmission } from '@/query'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useState } from 'react'
 import SelectMenus from './select-menus'
@@ -14,6 +15,7 @@ export default function SubmissionModal({ isOpen, setIsOpen, problemId = '' }) {
   const [id, setId] = useState('')
   const [file, setFile] = useState(null)
   const [language, setLanguage] = useState(languageItems[0])
+  const createSubmission = useCreateSubmission()
 
   useEffect(() => {
     setId(problemId)
@@ -55,13 +57,10 @@ export default function SubmissionModal({ isOpen, setIsOpen, problemId = '' }) {
                   </Dialog.Title>
                   <form
                     className="mt-2"
-                    onSubmit={async (event) => {
-                      event.preventDefault()
-                      console.log(id, file, language)
-                      // await createSubmission({
-                      //   problemId: id,
-                      //   language,
-                      // })
+                    onSubmit={async (e) => {
+                      e.preventDefault()
+                      await createSubmission.mutateAsync({ id, file, language })
+                      setIsOpen(false)
                     }}
                   >
                     <div className="mt-2">
@@ -77,7 +76,7 @@ export default function SubmissionModal({ isOpen, setIsOpen, problemId = '' }) {
                         id="problemId"
                         name="problemId"
                         type="text"
-                        onChange={(event) => setId(event.target.value)}
+                        onChange={(e) => setId(e.target.value)}
                       />
                     </div>
                     <div>
@@ -95,7 +94,7 @@ export default function SubmissionModal({ isOpen, setIsOpen, problemId = '' }) {
                         id="file"
                         name="file"
                         type="file"
-                        onChange={(event) => setFile(event.target.value)}
+                        onChange={(e) => setFile(e.target.value)}
                       />
                     </div>
                     <div className="mt-2">

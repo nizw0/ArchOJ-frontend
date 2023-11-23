@@ -1,7 +1,8 @@
 import { getUser, handleSignIn } from '@/api/index.js'
 import { userState } from '@/atoms'
 import { Square3Stack3DIcon } from '@heroicons/react/24/outline'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
+import { Link } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 
 export default function SignIn() {
@@ -25,11 +26,11 @@ export default function SignIn() {
             action="#"
             className="space-y-6"
             method="POST"
-            onSubmit={async (event) => {
-              event.preventDefault()
+            onSubmit={async (e) => {
+              e.preventDefault()
               const response = await handleSignIn({
-                username: event.target.username.value,
-                password: event.target.password.value,
+                username: e.target.username.value,
+                password: e.target.password.value,
               })
               if (response === null) {
                 setUser(await getUser())

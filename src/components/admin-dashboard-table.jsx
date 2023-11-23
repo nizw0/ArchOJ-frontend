@@ -1,11 +1,31 @@
+import { useImportUsers, useInitUsers } from '@/query'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { Link } from 'react-router-dom'
 
 const actions = [
   {
-    id: 1,
+    id: '1',
+    name: 'Import users by csv file',
+    comment: 'This action would create users by the csv file given.',
+    useExec: useImportUsers,
+  },
+  {
+    id: '2',
+    name: "Initiate users' environments",
+    comment: 'This action would create env for users.',
+    useExec: useInitUsers,
+  },
+  {
+    id: '3',
+    name: 'Import problems',
+    comment: 'This action would import problems you upload.',
+    useExec: () => {},
+  },
+  {
+    id: '4',
     name: 'Create a new enviroment',
     comment: 'This action would create a new app.',
+    useExec: () => {},
   },
 ]
 
@@ -16,12 +36,12 @@ export default function AdminDashboardTable() {
         Admin Dashboard
       </h1>
       <ul
-        className="-mx-2 mt-4 divide-y divide-gray-100 rounded-lg border-2 border-gray-100 px-2 hover:shadow-md"
+        className="-mx-2 mt-8 divide-y divide-gray-100 rounded-lg border-2 border-gray-100"
         role="list"
       >
         {actions.map((action) => (
           <li
-            className="relative flex justify-between gap-x-6 py-5"
+            className="relative flex justify-between gap-x-6 px-2 py-5 hover:shadow-md"
             key={action.id}
           >
             <div className="flex min-w-0 gap-x-4">

@@ -1,5 +1,5 @@
 import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import { ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { clsx } from 'clsx'
 import { Fragment } from 'react'
 
@@ -51,17 +51,6 @@ export default function SelectMenus({ items, selected, setSelected }) {
                         >
                           {item.name}
                         </span>
-
-                        {selected ? (
-                          <span
-                            className={clsx(
-                              active ? 'text-white' : 'text-indigo-600',
-                              'absolute inset-y-0 right-0 flex items-center pr-4'
-                            )}
-                          >
-                            <CheckIcon aria-hidden="true" className="h-5 w-5" />
-                          </span>
-                        ) : null}
                       </>
                     )}
                   </Listbox.Option>

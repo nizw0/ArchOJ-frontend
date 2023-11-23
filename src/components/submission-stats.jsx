@@ -5,10 +5,10 @@ export default function Submissionsubmissions({ submission }) {
     <div>
       <div className="mx-auto max-w-7xl">
         <div className="px-4 py-6 sm:px-6 lg:px-8">
-          <p className="text-sm font-medium leading-6 text-gray-500">Id</p>
+          <p className="text-sm font-medium leading-6 text-gray-500">Name</p>
           <p className="mt-2 flex items-baseline gap-x-2">
             <span className="text-4xl font-semibold tracking-tight">
-              {submission.id}
+              {submission.problemName}
             </span>
           </p>
         </div>
@@ -46,7 +46,7 @@ export default function Submissionsubmissions({ submission }) {
                     : 'text-red-600'
                 )}
               >
-                {submission.result || 'pending'}
+                {submission.result || null}
               </span>
             </p>
           </div>

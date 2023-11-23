@@ -17,7 +17,7 @@ export default function ProblemTabs({ page, setPage }) {
           defaultValue={tabs[0].name}
           id="tabs"
           name="tabs"
-          onChange={(event) => setPage(event.target.value)}
+          onChange={(e) => setPage(e.target.value)}
         >
           {tabs.map((tab) => (
             <option key={tab.id} value={tab.id}>

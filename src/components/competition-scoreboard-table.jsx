@@ -36,7 +36,7 @@ export default function CompetitionScoreboardTable() {
               <thead>
                 <tr className="divide-x divide-gray-200">
                   <th
-                    className="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                    className="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
                     scope="col"
                   >
                     Rank
@@ -55,7 +55,7 @@ export default function CompetitionScoreboardTable() {
                   </th>
                   {problems.map((problem) => (
                     <th
-                      className="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-0"
+                      className="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
                       key={problem.id}
                       scope="col"
                     >
@@ -67,7 +67,7 @@ export default function CompetitionScoreboardTable() {
               <tbody className="divide-y divide-gray-200 bg-white">
                 {teams.map((team) => (
                   <tr className="divide-x divide-gray-200" key={team.score}>
-                    <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-0">
+                    <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
                       {team.rank}
                     </td>
                     <td className="whitespace-nowrap p-4 text-sm text-gray-500">

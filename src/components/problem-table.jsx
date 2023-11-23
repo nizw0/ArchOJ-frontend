@@ -35,12 +35,12 @@ export default function ProblemTable({
       </div>
 
       {/* Table */}
-      <div className="-mx-4 mt-4 sm:-mx-0">
+      <div className="-mx-4 mt-4">
         <table className="min-w-full divide-y divide-gray-300">
           <thead>
             <tr>
               <th
-                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                className="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
                 scope="col"
               >
                 Id
@@ -60,7 +60,7 @@ export default function ProblemTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
-            {problems.length ? (
+            {problems.length &&
               problems
                 .slice(
                   (currentPage - 1) * 10,
@@ -72,20 +72,17 @@ export default function ProblemTable({
                     key={problem.id}
                     onClick={() => navigate(`${problem.id}`)}
                   >
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-0">
-                      {problem.id.substring(0, 8)}
+                    <td className="w-1/12 whitespace-nowrap px-4 py-4 text-sm text-gray-500">
+                      {problem.id}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-500">
+                    <td className="w-3/12 truncate whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900">
                       {problem.name}
                     </td>
-                    <td className="hidden max-w-sm truncate whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                    <td className="hidden w-1/2 max-w-sm truncate whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
                       {problem.description}
                     </td>
                   </tr>
-                ))
-            ) : (
-              <></>
-            )}
+                ))}
           </tbody>
         </table>
       </div>

@@ -1,42 +1,76 @@
 import { axiosInstance } from '@/axios.js'
 import { fetchAuthSession } from 'aws-amplify/auth'
 
-const path = '/problems/testcases'
+const basePath = '/problems'
+const path = 'testcases'
 
-export async function listTestcases() {
+export async function listTestcases(problemId) {
+  const { idToken } = (await fetchAuthSession()).tokens
   try {
-    const response = await axiosInstance.get(`${path}`)
-    return response.data
+    const { data } = await axiosInstance.get(
+      `${basePath}/${problemId}/${path}`,
+      {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      }
+    )
+    return data.data
   } catch (err) {
-    console.log(err)
+    const { data } = err.response
+    console.log(data.message)
+    throw data
   }
 }
 
-export async function getTestcaseById(id) {
+export async function getTestcase(problemId, testcaseId) {
   try {
-    const response = await axiosInstance.get(`${path}/${id}`)
-    return response.data
+    const { data } = await axiosInstance.get(
+      `${basePath}/${problemId}/${path}/${testcaseId}`
+    )
+    return data.data
   } catch (err) {
-    console.log(err.response.data.message)
+    const { data } = err.response
+    console.log(data.message)
+    throw data
   }
 }
 
-export async function createTestcase(testcase) {
-  const { idToken } = (await fetchAuthSession()).tokens
-  const response = await axiosInstance.post(`${path}`, testcase, {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
-  })
-  return response.data
+export async function createTestcase({ problemId, testcase }) {
+  try {
+    const { idToken } = (await fetchAuthSession()).tokens
+    const { data } = await axiosInstance.post(
+      `${basePath}/${problemId}/${path}`,
+      testcase,
+      {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      }
+    )
+    return data.data
+  } catch (err) {
+    const { data } = err.response
+    console.log(data.message)
+    throw data
+  }
 }
 
-export async function deleteTestcase(id) {
-  const { idToken } = (await fetchAuthSession()).tokens
-  const response = await axiosInstance.delete(`${path}/${id}`, {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
-  })
-  return response.data
+export async function deleteTestcase(problemId, testcaseId) {
+  try {
+    const { idToken } = (await fetchAuthSession()).tokens
+    const { data } = await axiosInstance.delete(
+      `${basePath}/${problemId}/${path}/${testcaseId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      }
+    )
+    return data.data
+  } catch (err) {
+    const { data } = err.response
+    console.log(data.message)
+    throw data
+  }
 }

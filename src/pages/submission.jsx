@@ -1,39 +1,42 @@
+import Loading from '@/components/loading'
 import SubmissionStats from '@/components/submission-stats'
+import { useGetSubmission } from '@/query'
 import { CodeBlock, github } from 'react-code-blocks'
-import { useLoaderData } from 'react-router'
-
-// const submission = {
-//   id: '1',
-//   problemId: '1',
-//   problemTitle: 'MYSQL n+1 problem',
-//   userId: '1',
-//   language: 'CPP',
-//   runtime: '2.13 s',
-//   status: 'Accepted',
-//   time: '5 days ago',
-//   code: '#include <iostream>\nint main() {\n cout << "hello world\\n" << endl;\n return 0;\n}',
-// }
+import { useParams } from 'react-router'
 
 export default function Submission() {
-  const submission = useLoaderData()
+  const { submissionId } = useParams()
+  const { isSuccess, data: submission } = useGetSubmission(submissionId)
 
   return (
-    <div className="bg-white px-6 lg:px-8">
-      {Object.keys(submission).length > 0 && (
-        <div className="mx-auto max-w-3xl text-base leading-7 text-gray-700">
-          <h1 className="mx-8 mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            {submission.problemName}
-          </h1>
-          <SubmissionStats submission={submission} />
-          <CodeBlock
-            wrapLongLines
-            language={submission.language}
-            showLineNumbers="true"
-            text={submission.code}
-            theme={github}
-          />
+    <>
+      {!isSuccess ? (
+        <Loading />
+      ) : (
+        <div className="bg-white px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-base leading-7 text-gray-700">
+            <h1 className="mx-8 mt-2 text-lg font-bold tracking-tight text-gray-900 sm:text-3xl">
+              {submission.id}
+            </h1>
+            <SubmissionStats submission={submission} />
+            <button
+              className="ml-2 rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 sm:ml-8"
+              onClick={() => {
+                navigator.clipboard.writeText(submission.code)
+              }}
+            >
+              Copy
+            </button>
+            <CodeBlock
+              wrapLongLines
+              language={submission.language}
+              showLineNumbers={isSuccess}
+              text={submission.code}
+              theme={github}
+            />
+          </div>
         </div>
       )}
-    </div>
+    </>
   )
 }

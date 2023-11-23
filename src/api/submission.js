@@ -5,45 +5,59 @@ const path = '/submissions'
 
 export async function listSubmissions() {
   try {
-    const response = await axiosInstance.get(`${path}`)
-    return response.data
+    const { data } = await axiosInstance.get(`${path}`)
+    return data.data
   } catch (err) {
-    console.log(err)
-    throw err
+    const { data } = err.response
+    console.log(data.message)
+    throw data
   }
 }
 
 export async function getSubmissionById(id) {
   try {
     const { idToken } = (await fetchAuthSession()).tokens
-    const response = await axiosInstance.get(`${path}/${id}`, {
+    const { data } = await axiosInstance.get(`${path}/${id}`, {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
     })
-    return response.data
+    return data.data
   } catch (err) {
-    console.log(err.response.data.message)
-    throw err
+    const { data } = err.response
+    console.log(data.message)
+    throw data
   }
 }
 
 export async function createSubmission(submission) {
-  const { idToken } = (await fetchAuthSession()).tokens
-  const response = await axiosInstance.post(`${path}`, submission, {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
-  })
-  return response.data
+  try {
+    const { idToken } = (await fetchAuthSession()).tokens
+    const { data } = await axiosInstance.post(`${path}`, submission, {
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    })
+    return data.data
+  } catch (err) {
+    const { data } = err.response
+    console.log(data.message)
+    throw data
+  }
 }
 
 export async function deleteSubmission(id) {
-  const { idToken } = (await fetchAuthSession()).tokens
-  const response = await axiosInstance.delete(`${path}/${id}`, {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
-  })
-  return response.data
+  try {
+    const { idToken } = (await fetchAuthSession()).tokens
+    const { data } = await axiosInstance.delete(`${path}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    })
+    return data.data
+  } catch (err) {
+    const { data } = err.response
+    console.log(data.message)
+    throw data
+  }
 }

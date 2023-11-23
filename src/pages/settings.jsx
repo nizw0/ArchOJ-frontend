@@ -29,10 +29,10 @@ export default function Settings() {
 
               <form
                 className="md:col-span-2"
-                onSubmit={async (event) => {
+                onSubmit={async (e) => {
                   await handleUpdateUserAttributes({
-                    name: event.target.name.value,
-                    email: event.target.email.value,
+                    name: e.target.name.value,
+                    email: e.target.email.value,
                   })
                   navigate(0)
                 }}
@@ -100,11 +100,11 @@ export default function Settings() {
 
               <form
                 className="md:col-span-2"
-                onSubmit={async (event) => {
-                  event.preventDefault()
-                  const currentPassword = event.target.currentPassword.value
-                  const newPassword = event.target.newPassword.value
-                  const confirmPassword = event.target.confirmPassword.value
+                onSubmit={async (e) => {
+                  e.preventDefault()
+                  const currentPassword = e.target.currentPassword.value
+                  const newPassword = e.target.newPassword.value
+                  const confirmPassword = e.target.confirmPassword.value
 
                   if (newPassword === confirmPassword) {
                     await handleUpdatePassword(currentPassword, newPassword)
@@ -152,7 +152,7 @@ export default function Settings() {
                   <div className="col-span-full">
                     <label
                       className="block text-sm font-medium leading-6 "
-                      htmlFor="confirm-password"
+                      htmlFor="confirmPassword"
                     >
                       Confirm password
                     </label>
@@ -191,8 +191,8 @@ export default function Settings() {
 
               <form
                 className="md:col-span-2"
-                onSubmit={(event) => {
-                  event.preventDefault()
+                onSubmit={(e) => {
+                  e.preventDefault()
                   handleSignOut(true)
                 }}
               >

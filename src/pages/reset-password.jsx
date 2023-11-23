@@ -24,17 +24,17 @@ export default function ResetPassword() {
           action="#"
           className="space-y-6"
           method="POST"
-          onSubmit={async (event) => {
-            event.preventDefault()
+          onSubmit={async (e) => {
+            e.preventDefault()
             if (!isNextStep) {
-              await handleResetPassword(event.target.username.value)
+              await handleResetPassword(e.target.username.value)
 
               setIsNextStep(true)
             } else {
               await handleConfirmResetPassword({
-                username: event.target.username.value,
-                confirmationCode: event.target.confirmationCode.value,
-                newPassword: event.target.newPassword.value,
+                username: e.target.username.value,
+                confirmationCode: e.target.confirmationCode.value,
+                newPassword: e.target.newPassword.value,
               })
               navigate('/sign-in')
             }

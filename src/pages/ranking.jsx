@@ -1,35 +1,32 @@
-import Loading from '@/components/loading'
 import Pagination from '@/components/pagination'
-import SubmissionTable from '@/components/submission-table'
-import { useListSubmissions } from '@/query'
+import RankingTable from '@/components/practice-scoreboard-table'
+import { useListUsersSolveCounts } from '@/query'
 import { useEffect, useState } from 'react'
 
-export default function Submissions() {
+export default function Ranking() {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsCount, setItemsCount] = useState(0)
-  const { isSuccess, data: submissions } = useListSubmissions()
+  const { isSuccess, data: userSolveCounts } = useListUsersSolveCounts()
 
   useEffect(() => {
-    if (isSuccess) setItemsCount(submissions.length)
-  }, [isSuccess, submissions])
+    if (isSuccess) setItemsCount(userSolveCounts.length)
+  }, [isSuccess, userSolveCounts])
 
   return (
     <>
-      {!isSuccess ? (
-        <Loading />
-      ) : (
-        <div>
-          <SubmissionTable
+      {isSuccess && (
+        <>
+          <RankingTable
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            submissions={submissions}
+            userSolveCounts={userSolveCounts}
           />
           <Pagination
             currentPage={currentPage}
             itemsCount={itemsCount}
             setCurrentPage={setCurrentPage}
           />
-        </div>
+        </>
       )}
     </>
   )
