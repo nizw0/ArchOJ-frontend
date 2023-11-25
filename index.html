@@ -15,5 +15,12 @@
       </noscript>
     </div>
     <script type="module" src="/src/index.jsx"></script>
+    <script>
+      window.global = window
+      window.process = {
+        env: { DEBUG: undefined },
+      }
+      var exports = {}
+    </script>
   </body>
 </html>
