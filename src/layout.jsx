@@ -19,7 +19,7 @@ export default function Layout() {
 
       const userAttributes = await getUserAttributes()
       setUserAttributes(userAttributes)
-      setIsAdmin(!!userAttributes['custom:isAdmin'])
+      setIsAdmin(!!userAttributes['custom:isAdmin'] || false)
     }
 
     updateState()

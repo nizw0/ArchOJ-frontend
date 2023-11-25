@@ -4,7 +4,7 @@ import ProblemTabs from '@/components/problem-tabs'
 import ProblemTestcaseTable from '@/components/problem-testcase-table'
 import { useGetProblem } from '@/query'
 import { clsx } from 'clsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { useRecoilValue } from 'recoil'
 
@@ -14,6 +14,11 @@ export default function Problem() {
   const { problemId } = useParams()
   const { isSuccess, data: problem } = useGetProblem(problemId)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    console.log('in')
+    if (isSuccess) console.log(problem)
+  }, [isSuccess, problem])
 
   return (
     <>
