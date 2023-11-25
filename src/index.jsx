@@ -1,7 +1,7 @@
 import { Amplify } from 'aws-amplify'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import App from 'src/App.jsx'
 import amplifyConfig from './aws-exports.js'
 import './index.css'
 
