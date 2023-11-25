@@ -35,33 +35,34 @@ export default function ProblemTable({
       </div>
 
       {/* Table */}
-      <div className="-mx-4 mt-4">
-        <table className="min-w-full divide-y divide-gray-300">
-          <thead>
-            <tr>
-              <th
-                className="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
-                scope="col"
-              >
-                Id
-              </th>
-              <th
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                scope="col"
-              >
-                Name
-              </th>
-              <th
-                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
-                scope="col"
-              >
-                Description
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200 bg-white">
-            {problems.length &&
-              problems
+
+      {problems && (
+        <div className="-mx-4 mt-4">
+          <table className="min-w-full divide-y divide-gray-300">
+            <thead>
+              <tr>
+                <th
+                  className="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  scope="col"
+                >
+                  Id
+                </th>
+                <th
+                  className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  scope="col"
+                >
+                  Name
+                </th>
+                <th
+                  className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
+                  scope="col"
+                >
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 bg-white">
+              {problems
                 .slice(
                   (currentPage - 1) * 10,
                   Math.min(problems.length, currentPage * 10)
@@ -83,9 +84,10 @@ export default function ProblemTable({
                     </td>
                   </tr>
                 ))}
-          </tbody>
-        </table>
-      </div>
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   )
 }

@@ -14,9 +14,6 @@ dist-ssr
 .env*
 !.env.sample
 
-# Amplify
-aws-exports.js
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

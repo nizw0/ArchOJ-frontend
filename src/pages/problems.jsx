@@ -12,8 +12,8 @@ export default function Problems() {
   const { isSuccess, data: problems } = useListProblems()
 
   useEffect(() => {
-    setItemsCount(problems.length)
-  }, [problems])
+    if (isSuccess) setItemsCount(problems.length)
+  }, [isSuccess, problems])
 
   return (
     <>
