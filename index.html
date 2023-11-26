@@ -16,11 +16,11 @@
     </div>
     <script type="module" src="/src/index.jsx"></script>
     <script>
-      window.global = window
-      window.process = {
-        env: { DEBUG: undefined },
+      const isBrowser = () => typeof window !== 'undefined'
+      const isGlobal = () => typeof global !== 'undefined'
+      if (!isGlobal() && isBrowser()) {
+        var global = window
       }
-      var exports = {}
     </script>
   </body>
 </html>
