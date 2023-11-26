@@ -41,7 +41,8 @@
     "react-dom": "^18.2.0",
     "react-router": "^6.19.0",
     "react-router-dom": "^6.19.0",
-    "recoil": "^0.7.7"
+    "recoil": "^0.7.7",
+    "rollup-plugin-node-polyfills": "^0.2.1"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",
