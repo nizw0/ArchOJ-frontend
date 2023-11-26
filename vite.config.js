@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react'
-import rollupNodePolyFill from 'rollup-plugin-node-polyfills'
+import nodePolyfills from 'rollup-plugin-polyfill-node'
 import { fileURLToPath } from 'url'
 import { defineConfig } from 'vite'
 
@@ -18,7 +18,7 @@ export default defineConfig({
   build: {
     outDir: 'build',
     rollupOptions: {
-      plugins: [rollupNodePolyFill()],
+      plugins: [nodePolyfills()],
     },
   },
 })
