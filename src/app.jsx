@@ -10,6 +10,7 @@ import { queryClient } from './query'
 import { router } from './router'
 
 Amplify.configure(amplifyConfig)
+console.log(import.meta.env)
 
 export default function App() {
   return (
