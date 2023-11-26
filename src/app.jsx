@@ -11,6 +11,8 @@ import { router } from './router'
 
 Amplify.configure(amplifyConfig)
 console.log(amplifyConfig.Auth.Cognito)
+console.log(process.env)
+console.log(import.meta.env)
 
 export default function App() {
   return (
