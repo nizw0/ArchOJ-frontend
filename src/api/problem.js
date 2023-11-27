@@ -5,7 +5,10 @@ const path = '/problems'
 
 export async function listProblems() {
   try {
-    const { data } = await axiosInstance.get(`${path}`)
+    const { idToken } = (await fetchAuthSession()).tokens
+    const { data } = await axiosInstance.get(`${path}`, {
+      headers: { Authorization: `Bearer ${idToken}` },
+    })
     return data.data
   } catch (err) {
     const { data } = err.response
@@ -16,7 +19,10 @@ export async function listProblems() {
 
 export async function getProblemById(id) {
   try {
-    const { data } = await axiosInstance.get(`${path}/${id}`)
+    const { idToken } = (await fetchAuthSession()).tokens
+    const { data } = await axiosInstance.get(`${path}/${id}`, {
+      headers: { Authorization: `Bearer ${idToken}` },
+    })
     return data.data
   } catch (err) {
     const { data } = err.response
