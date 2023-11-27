@@ -15,7 +15,13 @@ import {
 import { importUsers, initUsers } from './api/admin'
 import { listUsersSolveCounts } from './api/statistic'
 
-export const queryClient = new QueryClient()
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 5,
+    },
+  },
+})
 
 export const useListProblems = () =>
   useQuery({
