@@ -3,10 +3,12 @@ import {
   createProblem,
   createSubmission,
   createTestcase,
+  createWorkspace,
   deleteProblem,
   deleteSubmission,
   getProblemById,
   getSubmissionById,
+  getWorkspaceByAuth,
   listProblems,
   listSubmissions,
   listTestcases,
@@ -87,6 +89,18 @@ export const useCreateSubmission = () =>
 export const useDeleteSubmission = () =>
   useMutation({
     mutationFn: (submissionId) => deleteSubmission(submissionId),
+  })
+
+export const useGetWorkspaceByAuth = () =>
+  useQuery({
+    queryKey: ['environmentId'],
+    queryFn: () => getWorkspaceByAuth(),
+    placeholderData: {},
+  })
+
+export const useCreateWorkspace = () =>
+  useMutation({
+    mutationFn: () => createWorkspace(),
   })
 
 export const useListUsersSolveCounts = () =>

@@ -1,40 +1,37 @@
-import { createWorkspace, getWorkspaceByAuth } from '@/api'
 import Loading from '@/components/loading'
+import { useCreateWorkspace, useGetWorkspaceByAuth } from '@/query'
 import { HashtagIcon } from '@heroicons/react/24/outline'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 export default function Workspace() {
   const accountId = import.meta.env.VITE_ACCOUNT_ID
-  const [loading, setLoading] = useState(true)
-  const [isRunning, setIsRunning] = useState(false)
   const [environmentId, setEnvironmentId] = useState('')
   const [password, setPassword] = useState('')
+  const { data: response, isLoading, isSuccess } = useGetWorkspaceByAuth()
+  const createWorkspace = useCreateWorkspace()
   const navigate = useNavigate()
 
   useEffect(() => {
     const update = async () => {
-      setLoading(true)
-      const response = await getWorkspaceByAuth()
-      if (response.status === 'success' && response.message != null) navigate(0)
-      if (response.data.environmentId != null) {
-        setIsRunning(true)
-        setEnvironmentId(response.data.environmentId)
+      if (isSuccess) {
+        if (response.message != null) navigate(0)
+        if (response.data.environmentId != null)
+          setEnvironmentId(response.data.environmentId)
       }
-      setLoading(false)
     }
 
     update()
-  }, [setIsRunning, setEnvironmentId, setPassword, navigate])
+  }, [response, isSuccess, setEnvironmentId, navigate])
 
   return (
     <>
-      {loading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <div>
           <div className="space-x-4">
-            {isRunning ? (
+            {isSuccess ? (
               <Link
                 className="rounded-md bg-slate-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600"
                 rel="noopener noreferrer"
@@ -49,8 +46,7 @@ export default function Workspace() {
                 className="rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
                 type="button"
                 onClick={async () => {
-                  const { data } = await createWorkspace()
-                  setIsRunning(true)
+                  const data = await createWorkspace.mutateAsync()
                   setEnvironmentId(data.environmentId)
                   if (data.password) setPassword(data.password)
                 }}
@@ -73,7 +69,7 @@ export default function Workspace() {
             Current Status
           </p>
           <p className="mt-4 text-4xl font-bold">
-            {isRunning ? 'Running' : 'Stopped'}
+            {isSuccess ? 'Running' : 'Stopped'}
           </p>
           {password && (
             <p className="mt-4">
