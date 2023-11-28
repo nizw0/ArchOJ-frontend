@@ -2,7 +2,7 @@ import { createWorkspace, getWorkspaceByAuth } from '@/api'
 import Loading from '@/components/loading'
 import { HashtagIcon } from '@heroicons/react/24/outline'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Workspace() {
   const accountId = import.meta.env.VITE_ACCOUNT_ID
@@ -10,18 +10,22 @@ export default function Workspace() {
   const [isRunning, setIsRunning] = useState(false)
   const [environmentId, setEnvironmentId] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     const update = async () => {
       setLoading(true)
-      const { data } = await getWorkspaceByAuth()
-      setIsRunning(true)
-      setEnvironmentId(data.environmentId)
+      const response = await getWorkspaceByAuth()
+      if (response.status === 'success' && response.message != null) navigate(0)
+      if (response.data.environmentId != null) {
+        setIsRunning(true)
+        setEnvironmentId(response.data.environmentId)
+      }
       setLoading(false)
     }
 
     update()
-  }, [setIsRunning, setEnvironmentId, setPassword])
+  }, [setIsRunning, setEnvironmentId, setPassword, navigate])
 
   return (
     <>
