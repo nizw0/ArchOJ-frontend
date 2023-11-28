@@ -8,13 +8,18 @@ export default function Workspace() {
   const accountId = import.meta.env.VITE_ACCOUNT_ID
   const [environmentId, setEnvironmentId] = useState('')
   const [password, setPassword] = useState('')
-  const { data: response, isLoading, isSuccess } = useGetWorkspaceByAuth()
+  const {
+    data: response,
+    isLoading,
+    isSuccess,
+    isError,
+  } = useGetWorkspaceByAuth()
   const createWorkspace = useCreateWorkspace()
   const navigate = useNavigate()
 
   useEffect(() => {
     const update = async () => {
-      if (isSuccess) {
+      if (isSuccess && !isError) {
         if (response.message != null) navigate(0)
         if (response.data.environmentId != null)
           setEnvironmentId(response.data.environmentId)
@@ -22,7 +27,7 @@ export default function Workspace() {
     }
 
     update()
-  }, [response, isSuccess, setEnvironmentId, navigate])
+  }, [response, isSuccess, isError, setEnvironmentId, navigate])
 
   return (
     <>
@@ -31,7 +36,7 @@ export default function Workspace() {
       ) : (
         <div>
           <div className="space-x-4">
-            {isSuccess ? (
+            {isSuccess && !isError ? (
               <Link
                 className="rounded-md bg-slate-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600"
                 rel="noopener noreferrer"
@@ -69,7 +74,7 @@ export default function Workspace() {
             Current Status
           </p>
           <p className="mt-4 text-4xl font-bold">
-            {isSuccess ? 'Running' : 'Stopped'}
+            {isSuccess && !isError ? 'Running' : 'Stopped'}
           </p>
           {password && (
             <p className="mt-4">
