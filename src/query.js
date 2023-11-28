@@ -20,7 +20,7 @@ import { listUsersSolveCounts } from './api/statistic'
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 5,
+      retry: 1,
     },
   },
 })
@@ -93,12 +93,13 @@ export const useDeleteSubmission = () =>
 
 export const useGetWorkspaceByAuth = () =>
   useQuery({
-    queryKey: ['environmentId'],
-    queryFn: () => getWorkspaceByAuth(),
+    queryKey: ['environment'],
+    queryFn: getWorkspaceByAuth,
   })
 
 export const useCreateWorkspace = () =>
   useMutation({
+    mutationKey: ['environment'],
     mutationFn: () => createWorkspace(),
   })
 
