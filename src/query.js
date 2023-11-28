@@ -95,7 +95,6 @@ export const useGetWorkspaceByAuth = () =>
   useQuery({
     queryKey: ['environmentId'],
     queryFn: () => getWorkspaceByAuth(),
-    placeholderData: {},
   })
 
 export const useCreateWorkspace = () =>

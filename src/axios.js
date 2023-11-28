@@ -7,7 +7,6 @@ export const getAxiosInstance = () => {
     headers: {
       'Content-Type': 'application/json',
     },
-    validateStatus: () => true,
   })
 
   instance.interceptors.request.use(async (config) => {
@@ -17,6 +16,15 @@ export const getAxiosInstance = () => {
 
     return config
   })
+
+  instance.interceptors.response.use(
+    function (response) {
+      return response
+    },
+    function (error) {
+      return Promise.reject(error)
+    }
+  )
 
   return instance
 }

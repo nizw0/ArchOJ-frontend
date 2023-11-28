@@ -6,8 +6,8 @@ import { Link, useNavigate } from 'react-router-dom'
 
 export default function Workspace() {
   const accountId = import.meta.env.VITE_ACCOUNT_ID
-  const [environmentId, setEnvironmentId] = useState('')
-  const [password, setPassword] = useState('')
+  const [environmentId, setEnvironmentId] = useState(null)
+  const [password, setPassword] = useState(null)
   const {
     data: response,
     isLoading,
@@ -19,15 +19,16 @@ export default function Workspace() {
 
   useEffect(() => {
     const update = async () => {
-      if (isSuccess && !isError) {
-        if (response.message != null) navigate(0)
-        if (response.data.environmentId != null)
+      if (!isLoading) {
+        if (isSuccess) {
+          if (response.message != null) navigate(0)
           setEnvironmentId(response.data.environmentId)
+        }
       }
     }
 
     update()
-  }, [response, isSuccess, isError, setEnvironmentId, navigate])
+  }, [response, isLoading, isSuccess, isError, setEnvironmentId, navigate])
 
   return (
     <>
@@ -36,7 +37,7 @@ export default function Workspace() {
       ) : (
         <div>
           <div className="space-x-4">
-            {isSuccess && !isError ? (
+            {isSuccess ? (
               <Link
                 className="rounded-md bg-slate-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600"
                 rel="noopener noreferrer"
@@ -74,7 +75,7 @@ export default function Workspace() {
             Current Status
           </p>
           <p className="mt-4 text-4xl font-bold">
-            {isSuccess && !isError ? 'Running' : 'Stopped'}
+            {isSuccess ? 'Running' : 'Stopped'}
           </p>
           {password && (
             <p className="mt-4">
