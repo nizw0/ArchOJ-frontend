@@ -1,22 +1,13 @@
-import { axiosInstance } from '@/axios'
-import { fetchAuthSession } from 'aws-amplify/auth'
+import { getAxiosInstance } from '@/axios'
 
+const axios = await getAxiosInstance()
 const path = '/admin'
 
 export async function importUsers(file) {
   try {
-    const { idToken } = (await fetchAuthSession()).tokens
     const formData = new FormData('file', file)
 
-    const { data } = await axiosInstance.post(
-      `${path}/import-users`,
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-        },
-      }
-    )
+    const { data } = await axios.post(`${path}/import-users`, formData)
     return data.message
   } catch (err) {
     console.log(err)
@@ -26,17 +17,7 @@ export async function importUsers(file) {
 
 export async function initUsers() {
   try {
-    const { idToken } = (await fetchAuthSession()).tokens
-
-    const { data } = await axiosInstance.post(
-      `${path}/init-users`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-        },
-      }
-    )
+    const { data } = await axios.post(`${path}/init-users`)
     return data.message
   } catch (err) {
     console.log(err)
@@ -46,18 +27,9 @@ export async function initUsers() {
 
 export async function importProblems(file) {
   try {
-    const { idToken } = (await fetchAuthSession()).tokens
     const formData = new FormData('file', file)
 
-    const { data } = await axiosInstance.post(
-      `${path}/import-problems`,
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-        },
-      }
-    )
+    const { data } = await axios.post(`${path}/import-problems`, formData)
     return data.message
   } catch (err) {
     console.log(err)

@@ -1,11 +1,11 @@
-import { axiosInstance } from '@/axios.js'
-import { fetchAuthSession } from 'aws-amplify/auth'
+import { getAxiosInstance } from '@/axios.js'
 
+const axios = await getAxiosInstance()
 const path = '/submissions'
 
 export async function listSubmissions() {
   try {
-    const { data } = await axiosInstance.get(`${path}`)
+    const { data } = await axios.get(`${path}`)
     return data.data
   } catch (err) {
     const { data } = err.response
@@ -16,12 +16,7 @@ export async function listSubmissions() {
 
 export async function getSubmissionById(id) {
   try {
-    const { idToken } = (await fetchAuthSession()).tokens
-    const { data } = await axiosInstance.get(`${path}/${id}`, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    })
+    const { data } = await axios.get(`${path}/${id}`)
     return data.data
   } catch (err) {
     const { data } = err.response
@@ -32,12 +27,7 @@ export async function getSubmissionById(id) {
 
 export async function createSubmission(submission) {
   try {
-    const { idToken } = (await fetchAuthSession()).tokens
-    const { data } = await axiosInstance.post(`${path}`, submission, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    })
+    const { data } = await axios.post(`${path}`, submission)
     return data.data
   } catch (err) {
     const { data } = err.response
@@ -48,12 +38,7 @@ export async function createSubmission(submission) {
 
 export async function deleteSubmission(id) {
   try {
-    const { idToken } = (await fetchAuthSession()).tokens
-    const { data } = await axiosInstance.delete(`${path}/${id}`, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    })
+    const { data } = await axios.delete(`${path}/${id}`)
     return data.data
   } catch (err) {
     const { data } = err.response

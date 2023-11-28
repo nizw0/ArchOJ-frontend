@@ -1,10 +1,11 @@
-import { axiosInstance } from '@/axios'
+import { getAxiosInstance } from '@/axios'
 
+const axios = await getAxiosInstance()
 const path = '/statistics'
 
 export async function listUsersSolveCounts() {
   try {
-    const { data } = await axiosInstance.get(`${path}`)
+    const { data } = await axios.get(`${path}`)
     return data.data
   } catch (err) {
     console.log(err)

@@ -1,38 +1,19 @@
-import { axiosInstance } from '@/axios.js'
-import { fetchAuthSession } from 'aws-amplify/auth'
+import { getAxiosInstance } from '@/axios.js'
 
+const axios = await getAxiosInstance()
 const path = '/workspaces'
 
 export async function getWorkspaceByAuth() {
-  const { idToken } = (await fetchAuthSession()).tokens
-  const response = await axiosInstance.get(`${path}`, {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
-  })
+  const response = await axios.get(`${path}`)
   return response.data
 }
 
 export async function createWorkspace() {
-  const { idToken } = (await fetchAuthSession()).tokens
-  const response = await axiosInstance.post(
-    `${path}`,
-    {},
-    {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    }
-  )
+  const response = await axios.post(`${path}`)
   return response.data
 }
 
 export async function deleteWorkspace(id) {
-  const { idToken } = (await fetchAuthSession()).tokens
-  const response = await axiosInstance.delete(`${path}/${id}`, {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
-  })
+  const response = await axios.delete(`${path}/${id}`)
   return response.data
 }

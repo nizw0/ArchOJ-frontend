@@ -1,14 +1,11 @@
-import { axiosInstance } from '@/axios.js'
-import { fetchAuthSession } from 'aws-amplify/auth'
+import { getAxiosInstance } from '@/axios.js'
 
+const axios = await getAxiosInstance()
 const path = '/problems'
 
 export async function listProblems() {
   try {
-    const { idToken } = (await fetchAuthSession()).tokens
-    const { data } = await axiosInstance.get(`${path}`, {
-      headers: { Authorization: `Bearer ${idToken}` },
-    })
+    const { data } = await axios.get(`${path}`)
     return data.data
   } catch (err) {
     const { data } = err.response
@@ -19,10 +16,7 @@ export async function listProblems() {
 
 export async function getProblemById(id) {
   try {
-    const { idToken } = (await fetchAuthSession()).tokens
-    const { data } = await axiosInstance.get(`${path}/${id}`, {
-      headers: { Authorization: `Bearer ${idToken}` },
-    })
+    const { data } = await axios.get(`${path}/${id}`)
     return data.data
   } catch (err) {
     const { data } = err.response
@@ -33,10 +27,7 @@ export async function getProblemById(id) {
 
 export async function adminGetProblemById(id) {
   try {
-    const { idToken } = (await fetchAuthSession()).tokens
-    const { data } = await axiosInstance.get(`${path}/${id}`, {
-      headers: { Authorization: `Bearer ${idToken}` },
-    })
+    const { data } = await axios.get(`${path}/${id}`)
     return data.data
   } catch (err) {
     const { data } = err.response
@@ -47,12 +38,7 @@ export async function adminGetProblemById(id) {
 
 export async function createProblem(problem) {
   try {
-    const { idToken } = (await fetchAuthSession()).tokens
-    const { data } = await axiosInstance.post(`${path}`, problem, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    })
+    const { data } = await axios.post(`${path}`, problem)
     return data.data
   } catch (err) {
     const { data } = err.response
@@ -64,12 +50,7 @@ export async function createProblem(problem) {
 export async function updateProblem(problem) {
   try {
     const { id } = problem
-    const { idToken } = (await fetchAuthSession()).tokens
-    const data = await axiosInstance.patch(`${path}/${id}`, problem, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    })
+    const data = await axios.patch(`${path}/${id}`, problem)
     return data.data
   } catch (err) {
     const { data } = err.response
@@ -80,12 +61,7 @@ export async function updateProblem(problem) {
 
 export async function deleteProblem(id) {
   try {
-    const { idToken } = (await fetchAuthSession()).tokens
-    const { data } = await axiosInstance.delete(`${path}/${id}`, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    })
+    const { data } = await axios.delete(`${path}/${id}`)
     return data.data
   } catch (err) {
     const { data } = err.response
