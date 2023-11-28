@@ -1,6 +1,6 @@
 import { getAxiosInstance } from '@/axios.js'
 
-const axios = await getAxiosInstance()
+const axios = getAxiosInstance()
 const path = '/workspaces'
 
 export async function getWorkspaceByAuth() {

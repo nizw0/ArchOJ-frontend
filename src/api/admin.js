@@ -1,6 +1,6 @@
 import { getAxiosInstance } from '@/axios'
 
-const axios = await getAxiosInstance()
+const axios = getAxiosInstance()
 const path = '/admin'
 
 export async function importUsers(file) {

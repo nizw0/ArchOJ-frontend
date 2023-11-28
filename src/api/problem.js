@@ -1,6 +1,6 @@
 import { getAxiosInstance } from '@/axios.js'
 
-const axios = await getAxiosInstance()
+const axios = getAxiosInstance()
 const path = '/problems'
 
 export async function listProblems() {

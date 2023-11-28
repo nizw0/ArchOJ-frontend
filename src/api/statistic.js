@@ -1,6 +1,6 @@
 import { getAxiosInstance } from '@/axios'
 
-const axios = await getAxiosInstance()
+const axios = getAxiosInstance()
 const path = '/statistics'
 
 export async function listUsersSolveCounts() {
