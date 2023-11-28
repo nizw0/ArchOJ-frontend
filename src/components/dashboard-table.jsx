@@ -6,7 +6,7 @@ export default function DashboardTable({ submissions }) {
 
   useEffect(() => {
     setLatestSubmissions(
-      submissions.sort((a, b) => a.timestamp > b.timestamp).slice(0, 5)
+      submissions.sort((a, b) => b.timestamp - a.timestamp).slice(0, 5)
     )
   }, [submissions])
 

@@ -57,6 +57,7 @@ export default function SubmissionTable({
             <tbody className="divide-y divide-gray-200 bg-white">
               {submissions &&
                 submissions
+                  .sort((a, b) => b.timestamp - a.timestamp)
                   .slice(
                     (currentPage - 1) * 10,
                     Math.min(submissions.length, currentPage * 10)

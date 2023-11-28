@@ -1,7 +1,7 @@
 const data = {
-  solve: 123,
-  total: 1000,
-  accessRate: 0.97,
+  solve: 237,
+  total: 500,
+  accessRate: 0.63,
 }
 
 export default function DashboardStats() {

@@ -2,7 +2,7 @@ const users = Array.from({ length: 100 }, (_, i) => {
   const v = {
     name: 'admin',
     solveProblemsCount: 5,
-    totalProblemsCount: 1000,
+    totalProblemsCount: 500,
   }
   return v
 })
@@ -47,6 +47,7 @@ export default function RankingTable({
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
             {users
+              .sort((a, b) => b - a)
               .slice(
                 (currentPage - 1) * 10,
                 Math.min(users.length, currentPage * 10)

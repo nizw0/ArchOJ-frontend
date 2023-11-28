@@ -1,4 +1,4 @@
-import { signInState } from '@/atoms'
+import { signInState, userAttributesState } from '@/atoms'
 import DashboardStats from '@/components/dashboard-stats'
 import DashboardTable from '@/components/dashboard-table'
 import { useListSubmissions } from '@/query'
@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil'
 
 export default function Home() {
   const isSignIn = useRecoilValue(signInState)
-  // TODO: API for dashboard features.
+  const userAttributes = useRecoilValue(userAttributesState)
   const { isSuccess, data: submissions } = useListSubmissions()
 
   return (
@@ -19,7 +19,7 @@ export default function Home() {
             </h2>
           ) : (
             <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Welcome back! User.
+              {`Welcome back! ${userAttributes.name}`}
             </h2>
           )}
         </div>
