@@ -2,13 +2,12 @@ import { clsx } from 'clsx'
 import { useEffect, useState } from 'react'
 
 export default function DashboardTable({ submissions }) {
-  const [latestSubmissions, setLatestSubmissions] = useState([])
+  const [latestSubmissions, setLatestSubmissions] = useState(null)
 
   useEffect(() => {
-    if (submissions.length)
-      setLatestSubmissions(
-        submissions.sort((a, b) => a.timestamp > b.timestamp).slice(0, 5)
-      )
+    setLatestSubmissions(
+      submissions.sort((a, b) => a.timestamp > b.timestamp).slice(0, 5)
+    )
   }, [submissions])
 
   return (
@@ -66,41 +65,42 @@ export default function DashboardTable({ submissions }) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {latestSubmissions.map((submission) => (
-                    <tr key={submission.id}>
-                      <td className="hidden whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:table-cell">
-                        {new Date(submission.timestamp).toLocaleString()}
-                      </td>
-                      <td className="px-3 py-4 text-sm font-medium text-gray-900 sm:text-gray-500">
-                        {submission.problemName}
-                      </td>
-                      <td
-                        className={clsx(
-                          'px-3 py-4 text-sm font-medium',
-                          submission.result === 'Accepted'
-                            ? 'text-green-600'
-                            : submission.status
-                              ? 'text-red-600'
-                              : 'text-gray-600'
-                        )}
-                      >
-                        {submission.status ? submission.result : 'pending'}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {submission.runtime}
-                        <dl className="font-normal sm:hidden">
-                          <dt className="sr-only sm:hidden">Language</dt>
-                          <dd className="mt-1 truncate text-gray-500 lg:hidden">
-                            {submission.language}
-                          </dd>
-                        </dl>
-                      </td>
-                      <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                        {submission.language}
-                        <br />
-                      </td>
-                    </tr>
-                  ))}
+                  {latestSubmissions &&
+                    latestSubmissions.map((submission) => (
+                      <tr key={submission.id}>
+                        <td className="hidden whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:table-cell">
+                          {new Date(submission.timestamp).toLocaleString()}
+                        </td>
+                        <td className="px-3 py-4 text-sm font-medium text-gray-900 sm:text-gray-500">
+                          {submission.problemName}
+                        </td>
+                        <td
+                          className={clsx(
+                            'px-3 py-4 text-sm font-medium',
+                            submission.result === 'Accepted'
+                              ? 'text-green-600'
+                              : submission.status
+                                ? 'text-red-600'
+                                : 'text-gray-600'
+                          )}
+                        >
+                          {submission.status ? submission.result : 'pending'}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {submission.runtime}
+                          <dl className="font-normal sm:hidden">
+                            <dt className="sr-only sm:hidden">Language</dt>
+                            <dd className="mt-1 truncate text-gray-500 lg:hidden">
+                              {submission.language}
+                            </dd>
+                          </dl>
+                        </td>
+                        <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                          {submission.language}
+                          <br />
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>

@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom'
 import Layout from './layout'
 import Action from './pages/action'
-import AdminDashboard from './pages/admin-dashboard'
 import CompletePassword from './pages/complete-password'
+import Dashboard from './pages/dashboard'
 import Home from './pages/home'
 import Problem from './pages/problem'
 import ProblemEdit from './pages/problem-edit'
@@ -107,7 +107,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/admin-dashboard',
-        element: <AdminDashboard />,
+        element: <Dashboard />,
       },
       {
         path: '/action/:actionId',
