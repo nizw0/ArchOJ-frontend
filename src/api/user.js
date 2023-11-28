@@ -1,4 +1,5 @@
 import {
+  fetchAuthSession,
   fetchUserAttributes,
   getCurrentUser,
   updateUserAttributes,
@@ -29,5 +30,13 @@ export async function handleUpdateUserAttributes({ name, email }) {
     await updateUserAttributes({ userAttributes: { name, email } })
   } catch (err) {
     console.log(err)
+  }
+}
+
+export async function handleFetchAuthSession() {
+  try {
+    return await fetchAuthSession()
+  } catch (err) {
+    return null
   }
 }
