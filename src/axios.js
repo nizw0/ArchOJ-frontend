@@ -12,8 +12,9 @@ export const getAxiosInstance = () => {
 
   instance.interceptors.request.use(async (config) => {
     const session = await handleFetchAuthSession()
-    const { idToken } = session.tokens || null
+    const idToken = session?.tokens?.idToken ?? null
     config.headers.Authorization = idToken ? `Bearer ${idToken}` : ''
+
     return config
   })
 
