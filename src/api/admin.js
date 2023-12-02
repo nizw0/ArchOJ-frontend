@@ -35,9 +35,17 @@ export async function initUsers() {
 
 export async function importProblems(file) {
   try {
-    const { data } = await axios.post(`${path}/import-problems`, {
-      file,
-    })
+    const { data } = await axios.post(
+      `${path}/import-problems`,
+      {
+        file,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/zip',
+        },
+      }
+    )
     return data.message
   } catch (err) {
     console.log(err)
