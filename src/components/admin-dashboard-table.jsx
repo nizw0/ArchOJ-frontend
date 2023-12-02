@@ -5,26 +5,20 @@ import { Link } from 'react-router-dom'
 const actions = [
   {
     id: '1',
-    name: 'Import users by csv file',
-    comment: 'This action would create users by the csv file given.',
-    useExec: useImportUsers,
-  },
-  {
-    id: '2',
     name: "Initiate users' environments",
     comment: 'This action would create env for users.',
     useExec: useInitUsers,
   },
   {
+    id: '2',
+    name: 'Import users by csv file',
+    comment: 'This action would create users by the csv file given.',
+    useExec: useImportUsers,
+  },
+  {
     id: '3',
     name: 'Import problems',
     comment: 'This action would import problems you upload.',
-    useExec: () => {},
-  },
-  {
-    id: '4',
-    name: 'Create a new enviroment',
-    comment: 'This action would create a new app.',
     useExec: () => {},
   },
 ]

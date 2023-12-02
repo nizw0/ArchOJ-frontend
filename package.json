@@ -9,7 +9,7 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "vite",
+    "dev": "vite --port 5000",
     "preview": "vite preview"
   },
   "browserslist": {

@@ -1,39 +1,38 @@
-import { useImportUsers } from '@/query'
+import { importProblems, importUsers, initUsers } from '@/api'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
 const actions = [
   {
     id: '1',
-    name: 'Import users by csv file',
-    comment: 'This action would create users by the csv file given.',
-    useExec: useImportUsers,
+    name: "Initiate users' environments",
+    comment: 'This action would create env for users.',
   },
   {
     id: '2',
-    name: "Initiate users' environments",
-    comment: 'This action would create env for users.',
-    useExec: () => {},
+    name: 'Import users by csv file',
+    comment: 'This action would create users by the csv file given.',
   },
   {
     id: '3',
     name: 'Import problems',
     comment: 'This action would import problems you upload.',
-    useExec: () => {},
-  },
-  {
-    id: '4',
-    name: 'Create a new enviroment',
-    comment: 'This action would create a new app.',
-    useExec: () => {},
   },
 ]
+
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(blob)
+    reader.onloadend = () => resolve(reader.result.replace(/^.*,/, ''))
+    reader.onerror = reject
+  })
+}
 
 export default function Action() {
   const { actionId } = useParams()
   const action = actions[actionId - 1]
   const [file, setFile] = useState(null)
-  const exec = action.useExec()
   const navigate = useNavigate()
 
   return (
@@ -50,23 +49,45 @@ export default function Action() {
           className="mt-8 flex flex-col items-center justify-center space-y-4"
           onSubmit={async (e) => {
             e.preventDefault()
-            await exec.mutateAsync(file)
+            if (action === '1') await initUsers()
+            else if (action === '2') await importUsers(file)
+            else if (action === '3') await importProblems(file)
             navigate(-1)
           }}
         >
-          {actionId === '1' && (
+          {actionId === '2' && (
             <div>
               <label className="sr-only" htmlFor="file">
                 Choose file
               </label>
               <input
-                accept=".csv"
+                accept="text/csv"
                 className="mt-2 block w-full rounded-lg border border-gray-200 text-sm shadow-sm file:me-4 file:border-0 file:bg-gray-50 file:px-4 file:py-2 focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
                 id="file"
                 name="file"
                 type="file"
-                onChange={(e) => {
-                  setFile(e.target.files[0])
+                onChange={async (e) => {
+                  const base64 = await blobToBase64(e.target.files[0])
+                  setFile(base64)
+                }}
+              />
+            </div>
+          )}
+
+          {actionId === '3' && (
+            <div>
+              <label className="sr-only" htmlFor="file">
+                Choose file
+              </label>
+              <input
+                accept="application/zip"
+                className="mt-2 block w-full rounded-lg border border-gray-200 text-sm shadow-sm file:me-4 file:border-0 file:bg-gray-50 file:px-4 file:py-2 focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
+                id="file"
+                name="file"
+                type="file"
+                onChange={async (e) => {
+                  const base64 = await blobToBase64(e.target.files[0])
+                  setFile(base64)
                 }}
               />
             </div>
