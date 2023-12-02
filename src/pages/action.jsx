@@ -20,14 +20,14 @@ const actions = [
   },
 ]
 
-function blobToBase64(blob) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(blob)
-    reader.onloadend = () => resolve(reader.result.replace(/^.*,/, ''))
-    reader.onerror = reject
-  })
-}
+// function blobToBase64(blob) {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader()
+//     reader.readAsDataURL(blob)
+//     reader.onloadend = () => resolve(reader.result.replace(/^.*,/, ''))
+//     reader.onerror = reject
+//   })
+// }
 
 export default function Action() {
   const { actionId } = useParams()
@@ -67,8 +67,9 @@ export default function Action() {
                 name="file"
                 type="file"
                 onChange={async (e) => {
-                  const base64 = await blobToBase64(e.target.files[0])
-                  setFile(base64)
+                  // const base64 = await blobToBase64(e.target.files[0])
+                  // setFile(base64)
+                  setFile(e.target.files[0])
                 }}
               />
             </div>
@@ -86,8 +87,9 @@ export default function Action() {
                 name="file"
                 type="file"
                 onChange={async (e) => {
-                  const base64 = await blobToBase64(e.target.files[0])
-                  setFile(base64)
+                  // const base64 = await blobToBase64(e.target.files[0])
+                  // setFile(base64)
+                  setFile(e.target.files[0])
                 }}
               />
             </div>
