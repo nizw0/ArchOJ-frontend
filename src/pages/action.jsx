@@ -49,13 +49,13 @@ export default function Action() {
           className="mt-8 flex flex-col items-center justify-center space-y-4"
           onSubmit={async (e) => {
             e.preventDefault()
-            if (action === '1') await initUsers()
-            else if (action === '2') await importUsers(file)
-            else if (action === '3') await importProblems(file)
+            if (action.id === '1') await initUsers()
+            else if (action.id === '2') await importUsers(file)
+            else if (action.id === '3') await importProblems(file)
             navigate(-1)
           }}
         >
-          {actionId === '2' && (
+          {action.id === '2' && (
             <div>
               <label className="sr-only" htmlFor="file">
                 Choose file
@@ -74,7 +74,7 @@ export default function Action() {
             </div>
           )}
 
-          {actionId === '3' && (
+          {action.id === '3' && (
             <div>
               <label className="sr-only" htmlFor="file">
                 Choose file
@@ -96,7 +96,6 @@ export default function Action() {
           <div>
             <button
               className="rounded-md bg-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black"
-              disabled={action.id === '4'}
               type="submit"
             >
               Execute

@@ -1,4 +1,3 @@
-import { useImportUsers, useInitUsers } from '@/query'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { Link } from 'react-router-dom'
 
@@ -7,19 +6,16 @@ const actions = [
     id: '1',
     name: "Initiate users' environments",
     comment: 'This action would create env for users.',
-    useExec: useInitUsers,
   },
   {
     id: '2',
     name: 'Import users by csv file',
     comment: 'This action would create users by the csv file given.',
-    useExec: useImportUsers,
   },
   {
     id: '3',
     name: 'Import problems',
     comment: 'This action would import problems you upload.',
-    useExec: () => {},
   },
 ]
 
