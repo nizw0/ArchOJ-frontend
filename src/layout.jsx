@@ -16,10 +16,12 @@ export default function Layout() {
     const updateState = async () => {
       const user = await getUser()
       setUser(user)
+      setIsAdmin(false)
 
       const userAttributes = await getUserAttributes()
       setUserAttributes(userAttributes)
-      setIsAdmin(!!userAttributes['custom:isAdmin'] || false)
+      if (userAttributes['custom:isAdmin'] != null)
+        setIsAdmin(!!userAttributes['custom:isAdmin'])
     }
 
     updateState()
