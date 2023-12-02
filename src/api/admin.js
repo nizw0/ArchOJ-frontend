@@ -5,17 +5,11 @@ const path = '/admin'
 
 export async function importUsers(file) {
   try {
-    const { data } = await axios.post(
-      `${path}/import-users`,
-      {
-        file,
+    const { data } = await axios.post(`${path}/import-users`, file, {
+      headers: {
+        'Content-Type': 'text/csv',
       },
-      {
-        headers: {
-          'Content-Type': 'text/csv',
-        },
-      }
-    )
+    })
     return data.message
   } catch (err) {
     console.log(err)
@@ -35,17 +29,11 @@ export async function initUsers() {
 
 export async function importProblems(file) {
   try {
-    const { data } = await axios.post(
-      `${path}/import-problems`,
-      {
-        file,
+    const { data } = await axios.post(`${path}/import-problems`, file, {
+      headers: {
+        'Content-Type': 'application/zip',
       },
-      {
-        headers: {
-          'Content-Type': 'application/zip',
-        },
-      }
-    )
+    })
     return data.message
   } catch (err) {
     console.log(err)
