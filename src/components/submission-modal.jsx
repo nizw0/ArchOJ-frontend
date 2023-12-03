@@ -59,7 +59,11 @@ export default function SubmissionModal({ isOpen, setIsOpen, problemId = '' }) {
                     className="mt-2"
                     onSubmit={async (e) => {
                       e.preventDefault()
-                      await createSubmission.mutateAsync({ id, file, language })
+                      await createSubmission.mutateAsync({
+                        id,
+                        file,
+                        language: language.name,
+                      })
                       setIsOpen(false)
                     }}
                   >
