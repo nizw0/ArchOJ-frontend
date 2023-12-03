@@ -12,7 +12,7 @@ const languageItems = [
 ]
 
 export default function SubmissionModal({ isOpen, setIsOpen, problemId = '' }) {
-  const [id, setId] = useState('')
+  const [id, setId] = useState(problemId)
   const [file, setFile] = useState(null)
   const [language, setLanguage] = useState(languageItems[0])
   const createSubmission = useCreateSubmission()
