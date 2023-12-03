@@ -107,7 +107,7 @@ export default function SubmissionModal({ isOpen, setIsOpen, problemId = '' }) {
                         id="file"
                         name="file"
                         type="file"
-                        onChange={(e) => setFile(e.target.value)}
+                        onChange={(e) => setFile(e.target.files[0])}
                       />
                     </div>
                     <div className="mt-2">
