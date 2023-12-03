@@ -68,6 +68,7 @@ export default function SubmissionModal({ isOpen, setIsOpen, problemId = '' }) {
                     onSubmit={async (e) => {
                       e.preventDefault()
                       const code = await blobToText(file)
+                      console.log(code)
                       await createSubmission.mutateAsync({
                         problemId: id,
                         code,
