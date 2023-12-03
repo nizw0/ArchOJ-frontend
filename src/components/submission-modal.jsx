@@ -60,7 +60,7 @@ export default function SubmissionModal({ isOpen, setIsOpen, problemId = '' }) {
                     onSubmit={async (e) => {
                       e.preventDefault()
                       await createSubmission.mutateAsync({
-                        id,
+                        problemId: id,
                         file,
                         language: language.name,
                       })
