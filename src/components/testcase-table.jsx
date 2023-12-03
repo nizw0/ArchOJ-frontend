@@ -62,13 +62,13 @@ export default function TestcaseTable({ isSlideOpen, setIsSlideOpen }) {
                       key={testcase.id}
                       onClick={() => navigate(testcase.id)}
                     >
-                      <td className="hidden whitespace-nowrap px-4 py-4 text-sm text-gray-900 sm:table-cell sm:w-1/4">
+                      <td className="hidden whitespace-nowrap px-4 py-4 text-sm text-gray-900 sm:table-cell sm:w-1/12">
                         {testcase.id}
                       </td>
-                      <td className="w-1/2 whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-500 sm:w-5/12">
+                      <td className="max-w-0 truncate whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-500 sm:w-1/2">
                         {testcase.input}
                       </td>
-                      <td className="w-1/2 whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:w-5/12">
+                      <td className="max-w-0 whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:w-1/2">
                         {testcase.output}
                       </td>
                     </tr>

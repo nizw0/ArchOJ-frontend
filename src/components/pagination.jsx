@@ -10,8 +10,7 @@ export default function Pagination({
   itemsCount,
 }) {
   const firstPage = 1
-  const lastPage =
-    Number((itemsCount / 10).toFixed()) + (itemsCount % 10 ? 1 : 0)
+  const lastPage = Number(itemsCount / 10) + (itemsCount % 10 ? 1 : 0)
   const pages = []
 
   for (let page = 1; page <= lastPage; page++) {

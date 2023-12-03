@@ -21,7 +21,7 @@ export default function ProblemTestcaseTable({ testcases }) {
                     Output
                   </dt>
                   <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
-                    <div className="flex items-baseline text-base font-semibold">
+                    <div className="flex items-baseline whitespace-pre-wrap text-base font-semibold">
                       {testcase.output}
                     </div>
                   </dd>
