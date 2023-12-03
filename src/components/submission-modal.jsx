@@ -10,6 +10,14 @@ const languageItems = [
   { id: 3, name: 'javascript' },
   { id: 4, name: 'python' },
 ]
+function blobToText(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsText(blob)
+    reader.onloadend = () => resolve(reader.result)
+    reader.onerror = reject
+  })
+}
 
 export default function SubmissionModal({ isOpen, setIsOpen, problemId = '' }) {
   const [id, setId] = useState(problemId)
@@ -59,9 +67,10 @@ export default function SubmissionModal({ isOpen, setIsOpen, problemId = '' }) {
                     className="mt-2"
                     onSubmit={async (e) => {
                       e.preventDefault()
+                      const code = await blobToText(file)
                       await createSubmission.mutateAsync({
                         problemId: id,
-                        file,
+                        code,
                         language: language.name,
                       })
                       setIsOpen(false)
