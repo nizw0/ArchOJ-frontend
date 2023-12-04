@@ -1,10 +1,4 @@
-const data = {
-  solve: 237,
-  total: 500,
-  accessRate: 0.63,
-}
-
-export default function DashboardStats() {
+export default function DashboardStats({ data }) {
   return (
     <div>
       <dl className="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-2 md:divide-x md:divide-y-0">

@@ -1,14 +1,6 @@
-const users = Array.from({ length: 100 }, (_, i) => {
-  const v = {
-    name: 'admin',
-    solveProblemsCount: 5,
-    totalProblemsCount: 500,
-  }
-  return v
-})
-
 export default function RankingTable({
   userSolveCounts,
+  problemCounts,
   currentPage,
   setCurrentPage,
 }) {
@@ -46,11 +38,11 @@ export default function RankingTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
-            {users
+            {userSolveCounts
               .sort((a, b) => b - a)
               .slice(
                 (currentPage - 1) * 10,
-                Math.min(users.length, currentPage * 10)
+                Math.min(userSolveCounts.length, currentPage * 10)
               )
               .map((user, i) => (
                 <tr className="hover:bg-gray-100" key={i + 1}>
@@ -60,11 +52,11 @@ export default function RankingTable({
                   <td className="px-3 py-4 text-sm font-medium text-gray-900 sm:text-gray-500">
                     {user.name}
                     <dd className="mt-1 truncate text-gray-500 sm:hidden">
-                      {user.solveProblemsCount}/{user.totalProblemsCount}
+                      {user.count}/{problemCounts}
                     </dd>
                   </td>
                   <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
-                    {user.solveProblemsCount}/{user.totalProblemsCount}
+                    {user.count}/{problemCounts}
                   </td>
                 </tr>
               ))}

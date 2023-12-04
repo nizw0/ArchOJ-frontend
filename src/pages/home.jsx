@@ -1,13 +1,25 @@
 import { signInState, userAttributesState } from '@/atoms'
 import DashboardStats from '@/components/dashboard-stats'
 import DashboardTable from '@/components/dashboard-table'
-import { useListSubmissions } from '@/query'
+import {
+  useGetProblemCounts,
+  useGetUserAccessRate,
+  useGetUsersSolveCounts,
+  useListSubmissions,
+} from '@/query'
 import { useRecoilValue } from 'recoil'
 
 export default function Home() {
   const isSignIn = useRecoilValue(signInState)
   const userAttributes = useRecoilValue(userAttributesState)
-  const { isSuccess, data: submissions } = useListSubmissions()
+  const { isSuccess: isGetUserSuccess, data: userSolves } =
+    useGetUsersSolveCounts(userAttributes.sub)
+  const { isSuccess: isGetProblemSuccess, data: problem } =
+    useGetProblemCounts()
+  const { isSuccess: isGetUserAccessRateSuccess, data: user } =
+    useGetUserAccessRate(userAttributes.sub)
+  const { isSuccess: isListSubmissionsSuccess, data: submissions } =
+    useListSubmissions()
 
   return (
     <div className="mx-auto bg-white">
@@ -23,9 +35,21 @@ export default function Home() {
             </h2>
           )}
         </div>
-        {isSignIn && isSuccess && (
+        {isSignIn && isListSubmissionsSuccess && (
           <>
-            <DashboardStats />
+            {isGetProblemSuccess &&
+              isGetUserSuccess &&
+              isGetUserAccessRateSuccess && (
+                <>
+                  <DashboardStats
+                    data={{
+                      solve: userSolves.count,
+                      total: problem.count,
+                      accessRate: Number(user.accessRate),
+                    }}
+                  />
+                </>
+              )}
             <DashboardTable submissions={submissions} />
           </>
         )}

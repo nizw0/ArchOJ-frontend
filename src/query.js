@@ -15,7 +15,12 @@ import {
   updateProblem,
 } from './api'
 import { importUsers, initUsers } from './api/admin'
-import { listUsersSolveCounts } from './api/statistic'
+import {
+  getProblemCounts,
+  getUserAccessRate,
+  getUsersSolveCounts,
+  listUsersSolveCounts,
+} from './api/statistic'
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -107,7 +112,24 @@ export const useListUsersSolveCounts = () =>
   useQuery({
     queryKey: ['usersSolveCounts'],
     queryFn: () => listUsersSolveCounts(),
-    placeholderData: [],
+  })
+
+export const useGetUsersSolveCounts = (userId) =>
+  useQuery({
+    queryKey: ['getUsersSolveCounts', userId],
+    queryFn: () => getUsersSolveCounts(userId),
+  })
+
+export const useGetProblemCounts = () =>
+  useQuery({
+    queryKey: ['getProblemCounts'],
+    queryFn: () => getProblemCounts(),
+  })
+
+export const useGetUserAccessRate = (userId) =>
+  useQuery({
+    queryKey: ['getUserAccessRate', userId],
+    queryFn: () => getUserAccessRate(userId),
   })
 
 export const useImportUsers = () =>
