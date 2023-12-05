@@ -11,5 +11,5 @@ export default function UserRoute({ children }) {
     if (!isSignIn) navigate('/')
   })
 
-  return children
+  return <>{children}</>
 }

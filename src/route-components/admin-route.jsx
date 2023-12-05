@@ -11,5 +11,5 @@ export default function AdminRoute({ children }) {
     if (!isAdmin) navigate('/')
   })
 
-  return children
+  return <>{children}</>
 }
