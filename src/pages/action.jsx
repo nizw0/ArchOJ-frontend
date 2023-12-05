@@ -36,7 +36,7 @@ const actions = [
 const options = [
   {
     name: 'default problem set',
-    url: 'https://github.com/nizw0/ArchOJ-problem-sample/archive/refs/heads/main.zip',
+    url: '',
   },
 ]
 

@@ -17,6 +17,11 @@ const actions = [
     name: 'Import problems',
     comment: 'This action would import problems you upload.',
   },
+  {
+    id: '4',
+    name: 'Import problems from Github repo',
+    comment: 'This action would import problems from Github repo.',
+  },
 ]
 
 export default function AdminDashboardTable() {
