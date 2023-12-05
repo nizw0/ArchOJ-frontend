@@ -6,15 +6,18 @@ import { RecoilRoot } from 'recoil'
 import Loading from './components/loading'
 import { queryClient } from './query'
 import { router } from './router'
+import StateLayer from './state'
 
 export default function App() {
   return (
     <RecoilRoot>
       <Suspense fallback={<Loading />}>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
+        <StateLayer>
+          <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </StateLayer>
       </Suspense>
     </RecoilRoot>
   )
