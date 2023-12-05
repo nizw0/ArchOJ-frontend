@@ -1,3 +1,4 @@
+import { putProblemFile } from '@/api'
 import Loading from '@/components/loading'
 import { useDeleteProblem, useGetProblem, useUpdateProblem } from '@/query'
 import { useEffect, useState } from 'react'
@@ -6,6 +7,7 @@ import { useNavigate, useParams } from 'react-router'
 export default function ProblemEdit() {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
+  const [file, setFile] = useState(null)
   const { problemId } = useParams()
   const { isSuccess, data: problem } = useGetProblem(problemId)
   const updateProblem = useUpdateProblem()
@@ -107,7 +109,14 @@ export default function ProblemEdit() {
                   </p>
                 </div>
 
-                <form className="md:col-span-2" onSubmit={() => {}}>
+                <form
+                  className="md:col-span-2"
+                  onSubmit={async (e) => {
+                    e.preventDefault()
+                    await putProblemFile(problemId, file)
+                    navigate(`/problems/${problemId}`)
+                  }}
+                >
                   <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                     <div className="col-span-full">
                       <label
@@ -117,14 +126,18 @@ export default function ProblemEdit() {
                         Choose a file
                       </label>
                       <div className="mt-2">
-                        <label className="sr-only" htmlFor="small-file-input">
+                        <label className="sr-only" htmlFor="file">
                           Choose a file
                         </label>
                         <input
+                          accept="application/pdf"
                           className="mt-2 block w-full rounded-lg border border-gray-200 text-sm shadow-sm file:me-4 file:border-0 file:bg-gray-50 file:px-4 file:py-2 focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
-                          id="small-file-input"
-                          name="small-file-input"
+                          id="file"
+                          name="file"
                           type="file"
+                          onChange={(e) => {
+                            setFile(e.target.files[0])
+                          }}
                         />
                       </div>
                     </div>

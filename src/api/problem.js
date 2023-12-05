@@ -59,6 +59,21 @@ export async function updateProblem(problem) {
   }
 }
 
+export async function putProblemFile(problemId, file) {
+  try {
+    const data = await axios.put(`${path}/${problemId}`, file, {
+      headers: {
+        'Content-Type': 'application/pdf',
+      },
+    })
+    return data.data
+  } catch (err) {
+    const { data } = err.response
+    console.log(data.message)
+    throw data
+  }
+}
+
 export async function deleteProblem(id) {
   try {
     const { data } = await axios.delete(`${path}/${id}`)

@@ -1,4 +1,5 @@
 import { useListTestcases } from '@/query'
+import clsx from 'clsx'
 import { useNavigate, useParams } from 'react-router'
 import Loading from './loading'
 
@@ -58,8 +59,12 @@ export default function TestcaseTable({ isSlideOpen, setIsSlideOpen }) {
                 {isSuccess &&
                   testcases.map((testcase) => (
                     <tr
-                      className="hover:bg-gray-100"
                       key={testcase.id}
+                      className={clsx(
+                        testcase.isSample
+                          ? 'bg-gray-200 hover:bg-gray-300'
+                          : 'hover:bg-gray-100'
+                      )}
                       onClick={() => navigate(testcase.id)}
                     >
                       <td className="hidden whitespace-nowrap px-4 py-4 text-sm text-gray-900 sm:table-cell sm:w-1/12">
@@ -68,7 +73,7 @@ export default function TestcaseTable({ isSlideOpen, setIsSlideOpen }) {
                       <td className="max-w-0 truncate whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-500 sm:w-1/2">
                         {testcase.input}
                       </td>
-                      <td className="max-w-0 whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:w-1/2">
+                      <td className="max-w-0 truncate whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:w-1/2">
                         {testcase.output}
                       </td>
                     </tr>

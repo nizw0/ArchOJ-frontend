@@ -36,6 +36,9 @@ export default function Testcase() {
               Edit
             </button>
           </div>
+          <div className="mt-2">
+            {testcase.isSample && <p>This is a sample testcase.</p>}
+          </div>
           <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
               <dt className="truncate text-sm font-medium text-gray-500">

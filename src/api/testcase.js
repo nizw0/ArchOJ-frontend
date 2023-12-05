@@ -42,6 +42,20 @@ export async function createTestcase({ problemId, testcase }) {
   }
 }
 
+export async function updateTestcase({ problemId, testcase }) {
+  try {
+    const { data } = await axios.patch(
+      `${basePath}/${problemId}/${path}`,
+      testcase
+    )
+    return data.data
+  } catch (err) {
+    const { data } = err.response
+    console.log(data.message)
+    throw data
+  }
+}
+
 export async function deleteTestcase(problemId, testcaseId) {
   try {
     const { data } = await axios.delete(

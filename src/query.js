@@ -13,6 +13,7 @@ import {
   listSubmissions,
   listTestcases,
   updateProblem,
+  updateTestcase,
 } from './api'
 import { importUsers, initUsers } from './api/admin'
 import {
@@ -70,6 +71,12 @@ export const useCreateTestcase = () =>
   useMutation({
     mutationFn: ({ problemId, testcase }) =>
       createTestcase({ problemId, testcase }),
+  })
+
+export const useUpdateTestcase = () =>
+  useMutation({
+    mutationFn: ({ problemId, testcase }) =>
+      updateTestcase({ problemId, testcase }),
   })
 
 export const useListSubmissions = () =>
