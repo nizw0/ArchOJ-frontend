@@ -1,5 +1,13 @@
-import { importProblems, importUsers, initUsers } from '@/api'
-import { useState } from 'react'
+import {
+  importProblems,
+  importProblemsFromRepo,
+  importUsers,
+  initUsers,
+} from '@/api'
+import { Listbox, Transition } from '@headlessui/react'
+import { ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import clsx from 'clsx'
+import { Fragment, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
 const actions = [
@@ -18,21 +26,25 @@ const actions = [
     name: 'Import problems',
     comment: 'This action would import problems you upload.',
   },
+  {
+    id: '4',
+    name: 'Import problems from Github repo',
+    comment: 'This action would import problems from Github repo.',
+  },
 ]
 
-// function blobToBase64(blob) {
-//   return new Promise((resolve, reject) => {
-//     const reader = new FileReader()
-//     reader.readAsDataURL(blob)
-//     reader.onloadend = () => resolve(reader.result.replace(/^.*,/, ''))
-//     reader.onerror = reject
-//   })
-// }
+const options = [
+  {
+    name: 'default problem set',
+    url: 'https://github.com/nizw0/ArchOJ-problem-sample/archive/refs/heads/main.zip',
+  },
+]
 
 export default function Action() {
   const { actionId } = useParams()
   const action = actions[actionId - 1]
   const [file, setFile] = useState(null)
+  const [option, setOption] = useState(options[0])
   const navigate = useNavigate()
 
   return (
@@ -52,6 +64,7 @@ export default function Action() {
             if (action.id === '1') await initUsers()
             else if (action.id === '2') await importUsers(file)
             else if (action.id === '3') await importProblems(file)
+            else if (action.id === '4') await importProblemsFromRepo(option.url)
             navigate(-1)
           }}
         >
@@ -67,8 +80,6 @@ export default function Action() {
                 name="file"
                 type="file"
                 onChange={async (e) => {
-                  // const base64 = await blobToBase64(e.target.files[0])
-                  // setFile(base64)
                   setFile(e.target.files[0])
                 }}
               />
@@ -87,12 +98,71 @@ export default function Action() {
                 name="file"
                 type="file"
                 onChange={async (e) => {
-                  // const base64 = await blobToBase64(e.target.files[0])
-                  // setFile(base64)
                   setFile(e.target.files[0])
                 }}
               />
             </div>
+          )}
+
+          {action.id === '4' && (
+            <Listbox disabled value={option} onChange={setOption}>
+              {({ open }) => (
+                <>
+                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">
+                    repo url
+                  </Listbox.Label>
+                  <div className="relative mt-2">
+                    <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                      <span className="block h-6 truncate">{option.name}</span>
+                      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                        <ChevronUpDownIcon
+                          aria-hidden="true"
+                          className="h-5 w-5 text-gray-400"
+                        />
+                      </span>
+                    </Listbox.Button>
+
+                    <Transition
+                      as={Fragment}
+                      leave="transition ease-in duration-100"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                      show={open}
+                    >
+                      <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        {options.map((item) => (
+                          <Listbox.Option
+                            key={item.name}
+                            value={item.url}
+                            className={clsx(
+                              'flex flex-row items-center justify-center py-2',
+                              item.name === option.name
+                                ? 'bg-indigo-600 text-white'
+                                : 'text-gray-900'
+                            )}
+                          >
+                            {
+                              <>
+                                <span
+                                  className={clsx(
+                                    'block truncate',
+                                    item.name === option.name
+                                      ? 'font-semibold'
+                                      : 'font-normal'
+                                  )}
+                                >
+                                  {item.name}
+                                </span>
+                              </>
+                            }
+                          </Listbox.Option>
+                        ))}
+                      </Listbox.Options>
+                    </Transition>
+                  </div>
+                </>
+              )}
+            </Listbox>
           )}
 
           <div>

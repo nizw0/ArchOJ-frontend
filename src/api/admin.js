@@ -40,3 +40,19 @@ export async function importProblems(file) {
     throw err
   }
 }
+
+export async function importProblemsFromRepo(url) {
+  try {
+    const file = await axios.get()
+
+    const { data } = await axios.post(`${path}/import-problems`, file, {
+      headers: {
+        'Content-Type': 'application/zip',
+      },
+    })
+    return data.message
+  } catch (err) {
+    console.log(err)
+    throw err
+  }
+}
