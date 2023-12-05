@@ -42,10 +42,10 @@ export async function createTestcase({ problemId, testcase }) {
   }
 }
 
-export async function updateTestcase({ problemId, testcase }) {
+export async function updateTestcase({ problemId, testcaseId, testcase }) {
   try {
     const { data } = await axios.patch(
-      `${basePath}/${problemId}/${path}`,
+      `${basePath}/${problemId}/${path}/${testcaseId}`,
       testcase
     )
     return data.data

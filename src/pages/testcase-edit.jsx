@@ -30,9 +30,14 @@ export default function TestcaseEdit() {
       ) : (
         <div>
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault()
-              updateTestcase.mutate({})
+              await updateTestcase.mutateAsync({
+                problemId,
+                testcaseId,
+                testcase: { input, output, isSample },
+              })
+              navigate(-1)
             }}
           >
             <div className="flex flex-row justify-between">

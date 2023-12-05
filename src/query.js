@@ -75,8 +75,8 @@ export const useCreateTestcase = () =>
 
 export const useUpdateTestcase = () =>
   useMutation({
-    mutationFn: ({ problemId, testcase }) =>
-      updateTestcase({ problemId, testcase }),
+    mutationFn: ({ problemId, testcaseId, testcase }) =>
+      updateTestcase({ problemId, testcaseId, testcase }),
   })
 
 export const useListSubmissions = () =>
