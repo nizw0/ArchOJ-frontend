@@ -7,11 +7,13 @@ import {
   useGetUsersSolveCounts,
   useListSubmissions,
 } from '@/query'
+import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 
 export default function Home() {
   const isSignIn = useRecoilValue(signInState)
   const userAttributes = useRecoilValue(userAttributesState)
+  const [userSubmissions, setUserSubmissions] = useState([])
   const { isSuccess: isGetUserSuccess, data: userSolves } =
     useGetUsersSolveCounts(userAttributes.sub)
   const { isSuccess: isGetProblemSuccess, data: problem } =
@@ -20,6 +22,15 @@ export default function Home() {
     useGetUserAccessRate(userAttributes.sub)
   const { isSuccess: isListSubmissionsSuccess, data: submissions } =
     useListSubmissions()
+
+  useEffect(() => {
+    if (isListSubmissionsSuccess) {
+      const sub = userAttributes.sub
+      setUserSubmissions(
+        submissions.filter((submission) => submission.userId === sub)
+      )
+    }
+  }, [isListSubmissionsSuccess, submissions, userAttributes.sub])
 
   return (
     <div className="mx-auto bg-white">
@@ -50,7 +61,7 @@ export default function Home() {
                   />
                 </>
               )}
-            <DashboardTable submissions={submissions} />
+            <DashboardTable submissions={userSubmissions} />
           </>
         )}
       </div>
